@@ -52,10 +52,22 @@ export async function buildApp(cfg: Config, db: Db, opts: { adapters?: Adapters;
   });
 
   const allowedOrigin = new URL(cfg.PUBLIC_URL).origin;
+  const extraOrigins = (process.env.ALLOWED_ORIGINS ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  // Même origine que l'hôte servi (utile derrière un proxy d'aperçu), PUBLIC_URL, ou liste explicite.
+  const originAllowed = (origin: string, h: Record<string, any>) => {
+    if (origin === allowedOrigin || extraOrigins.includes(origin)) return true;
+    try {
+      const host = new URL(origin).host;
+      const served = String(h['x-forwarded-host'] ?? h.host ?? '').split(',')[0].trim();
+      return !!served && host === served;
+    } catch {
+      return false;
+    }
+  };
   app.addHook('onRequest', async (req, reply) => {
     reply.header('x-content-type-options', 'nosniff').header('referrer-policy', 'no-referrer').header('x-frame-options', 'DENY');
     // Protection CSRF : en plus du cookie SameSite=Lax, toute écriture venant d'un navigateur doit provenir de notre origine.
-    if (req.method !== 'GET' && req.method !== 'HEAD' && req.headers.origin && req.headers.origin !== allowedOrigin) {
+    if (req.method !== 'GET' && req.method !== 'HEAD' && req.headers.origin && !originAllowed(req.headers.origin, req.headers)) {
       throw new AppError(403, 'bad_origin', 'Origine non autorisée.');
     }
     if (req.url.startsWith('/api/')) {

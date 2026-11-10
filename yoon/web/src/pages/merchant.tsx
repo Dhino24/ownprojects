@@ -258,6 +258,7 @@ function ConfirmReceived({ ob, onDone }: { ob: any; onDone: () => void }) {
 
 export function MerchantOrder() {
   const { id = '' } = useParams();
+  const { meta } = useSession();
   const q = useData(() => api(`/api/merchant/orders/${id}`), [id], { live: true });
   const [modal, setModal] = useState<null | 'cancel' | 'report' | { declare: any } | { confirm: any } | { reject: any }>(null);
   const { run, busy } = useAction();
@@ -271,6 +272,12 @@ export function MerchantOrder() {
         <>
           <Intro eyebrow={`Livraison #${o.ref}`} title={waiting ? 'En attente de la position du client.' : ORDER_STATUS_LABEL[o.status as keyof typeof ORDER_STATUS_LABEL]}
             sub={`${o.customer_name} · ${o.pickup_zone} → ${o.dest_zone} · ${when(o.created_at)}`} action={<StatusTag status={o.status} />} />
+          {meta?.demo && (() => {
+            // Démo uniquement : ouvrir la page client sur ce même appareil pour tester le parcours.
+            const m = d.messages.filter((x: any) => x.template === 'location_request' && x.status !== 'failed').pop();
+            const tok = m?.body.match(/\/c#([\w-]{20,})/)?.[1];
+            return tok ? <div className="notice warn">Mode démo : <a href={`/c#${tok}`} target="_blank" rel="noopener"><b>ouvrir la page du client ↗</b></a> (en vrai, le client la reçoit par WhatsApp).</div> : null;
+          })()}
           {isNew && <div className="notice" role="status">Livraison créée. Envoyez maintenant la demande de position à votre client via WhatsApp.</div>}
           <div className="grid">
             <div>
