@@ -21,7 +21,7 @@ export async function createSession(ctx: Ctx, reply: FastifyReply, userId: strin
   await ctx.db.query(`insert into sessions(token_hash, user_id, expires_at) values ($1,$2, now() + make_interval(days => $3))`,
     [sha256(token), userId, ctx.cfg.SESSION_TTL_DAYS]);
   reply.setCookie(SESSION_COOKIE, token, {
-    httpOnly: true, sameSite: 'lax', secure: ctx.cfg.NODE_ENV === 'production', path: '/', maxAge: ctx.cfg.SESSION_TTL_DAYS * 86400,
+    httpOnly: true, sameSite: 'lax', secure: ctx.cfg.NODE_ENV === 'production' || ctx.cfg.PUBLIC_URL.startsWith('https://'), path: '/', maxAge: ctx.cfg.SESSION_TTL_DAYS * 86400,
   });
 }
 

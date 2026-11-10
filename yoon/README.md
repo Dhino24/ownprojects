@@ -63,6 +63,16 @@ BASE=http://localhost:8787 npm run screens     # nécessite Playwright (npm i -D
 
 Le script joue le parcours complet dans Chromium (GPS simulé), puis capture chaque écran à 360, 390 et 1440 px dans `screens/` et échoue en cas de débordement horizontal ou d'erreur JavaScript. Il suppose une base de démo fraîche.
 
+## Tester en ligne (Render, gratuit)
+
+Le fichier [`render.yaml`](../render.yaml) à la racine du dépôt décrit un environnement de **test** (mode démo, données fictives) : un service web Node + une base PostgreSQL gratuite.
+
+1. Sur [render.com](https://render.com), se connecter avec GitHub.
+2. **New › Blueprint**, choisir ce dépôt et la branche contenant Yoon, puis **Apply**.
+3. Attendre la fin du build (5 à 10 min), puis ouvrir l'URL `https://yoon-demo-….onrender.com`.
+
+Les comptes de démo ci-dessus fonctionnent. Limites de l'offre gratuite : le service s'endort après 15 min sans visite (premier chargement ≈ 1 min), les fichiers déposés sont perdus à chaque redémarrage, la base gratuite expire après 30 jours. Ce n'est pas une configuration de production.
+
 ## Variables d'environnement
 
 Voir [`.env.example`](.env.example) (commenté). Principales : `DATABASE_URL`, `PUBLIC_URL` (liens clients + contrôle d'origine), `APP_SECRET` (chiffrement des codes, signatures des URL de médias), `STORAGE_DIR`, `OFFER_TTL_SECONDS` (30), `CODE_MAX_ATTEMPTS` (5), `CODE_TTL_HOURS`, `CLIENT_LINK_TTL_HOURS`, `RECAP_HOUR_DAKAR`, `MEDIA_RETENTION_DAYS`, `DEMO_MODE`, `SERVE_WEB`, `TRUST_PROXY`, `VITE_MAP_TILE_URL`.

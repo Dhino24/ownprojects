@@ -31,7 +31,8 @@ const schema = z.object({
 export type Config = z.infer<typeof schema>;
 
 export function loadConfig(env: Record<string, string | undefined> = process.env): Config {
-  const cfg = schema.parse(env);
+  // Hébergeurs (ex. Render) : l'URL publique est fournie automatiquement.
+  const cfg = schema.parse({ ...env, PUBLIC_URL: env.PUBLIC_URL ?? env.RENDER_EXTERNAL_URL });
   if (cfg.NODE_ENV === 'production') {
     if (cfg.APP_SECRET.startsWith('dev-only')) throw new Error('APP_SECRET doit être défini en production');
     if (cfg.DEMO_MODE) throw new Error('DEMO_MODE est interdit en production');
