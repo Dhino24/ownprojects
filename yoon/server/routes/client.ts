@@ -25,7 +25,7 @@ export async function clientRoutes(app: FastifyInstance, ctx: Ctx) {
     const enRoute = ['assigned', 'at_pickup', 'picked_up', 'in_delivery'].includes(o.status);
     const closed = ['delivered', 'cancelled'].includes(o.status);
     return {
-      order: { ref: o.ref, status: o.status, shop_name: o.shop_name, customer_name: o.customer_name, pickup_zone: o.pickup_zone, dest_zone: o.dest_zone,
+      order: { id: o.id, ref: o.ref, status: o.status, shop_name: o.shop_name, customer_name: o.customer_name, pickup_zone: o.pickup_zone, dest_zone: o.dest_zone,
         order_amount: o.order_amount, delivery_price: o.delivery_price, delivery_payer: o.delivery_payer, delivered_at: o.delivered_at },
       courier: o.courier_id && enRoute ? { firstName: String(o.courier_name).split(' ')[0], phone: o.courier_phone, position: positionInfo(o.courier_lat, o.courier_lng, o.courier_position_at) } : null,
       shopPhone: o.shop_phone,

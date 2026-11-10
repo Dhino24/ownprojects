@@ -35,7 +35,21 @@ export async function buildApp(cfg: Config, db: Db, opts: { adapters?: Adapters;
 
   await app.register(cookie);
   await app.register(multipart);
-  await app.register(rateLimit, { max: 300, timeWindow: '1 minute', allowList: cfg.NODE_ENV === 'test' ? () => true : undefined });
+  // Limitation de débit sur l'API seulement. Beaucoup d'abonnés mobiles partagent une IP (CGNAT) :
+  // la clé est la session, le jeton client ou le numéro saisi, et l'IP seulement à défaut.
+  await app.register(rateLimit, {
+    max: 600, timeWindow: '1 minute', hook: 'preHandler',
+    allowList: (req) => cfg.NODE_ENV === 'test' || !req.url.startsWith('/api/'),
+    keyGenerator: (req) => {
+      const sid = req.cookies?.[SESSION_COOKIE];
+      const ct = req.headers['x-client-token'];
+      const phone = (req.body as any)?.phone;
+      if (sid) return `s:${sid.slice(0, 16)}`;
+      if (typeof ct === 'string' && ct) return `c:${ct.slice(0, 16)}`;
+      if (typeof phone === 'string') return `p:${req.ip}:${phone.replace(/\D/g, '').slice(-9)}`;
+      return `ip:${req.ip}`;
+    },
+  });
 
   const allowedOrigin = new URL(cfg.PUBLIC_URL).origin;
   app.addHook('onRequest', async (req, reply) => {
