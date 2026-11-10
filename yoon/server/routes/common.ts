@@ -86,6 +86,8 @@ export async function commonRoutes(app: FastifyInstance, ctx: Ctx, bus: LiveBus)
 
   /** Flux temps réel (SSE). Le client reçoit seulement des signaux « à rafraîchir », jamais de données. */
   app.get('/api/live', async (req, reply) => {
+    // Hébergement sans connexion longue : 204 = « pas de flux, rafraîchissez périodiquement ».
+    if (!ctx.cfg.LIVE_SSE) return reply.code(204).send();
     let match: (ev: LiveEvent) => boolean;
     if (req.headers['x-client-token']) {
       await requireClient(ctx)(req);

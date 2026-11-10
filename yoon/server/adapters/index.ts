@@ -68,7 +68,27 @@ export function sniffMedia(buf: Buffer): { mime: string; ext: string; kind: 'ima
   return null;
 }
 
+/** Stockage privé Netlify Blobs (le magasin n'est jamais exposé publiquement). */
+export function netlifyBlobsStorage(): MediaStorage {
+  const store = async () => (await import('@netlify/blobs')).getStore('yoon-media');
+  return {
+    async put(buf, ext) {
+      const key = `${new Date().toISOString().slice(0, 7)}/${randomUUID()}.${ext}`;
+      await (await store()).set(key, new Uint8Array(buf).buffer as ArrayBuffer);
+      return key;
+    },
+    async get(key) {
+      const data = await (await store()).get(key, { type: 'arrayBuffer' });
+      if (!data) throw new Error('média introuvable');
+      return Buffer.from(data);
+    },
+    async remove(key) {
+      await (await store()).delete(key);
+    },
+  };
+}
+
 export type Adapters = { whatsapp: WhatsAppAdapter; storage: MediaStorage };
 export function createAdapters(cfg: Config): Adapters {
-  return { whatsapp: manualWhatsApp, storage: localStorage(cfg.STORAGE_DIR) };
+  return { whatsapp: manualWhatsApp, storage: cfg.MEDIA_STORAGE === 'netlify_blobs' ? netlifyBlobsStorage() : localStorage(cfg.STORAGE_DIR) };
 }

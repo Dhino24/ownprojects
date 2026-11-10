@@ -11,8 +11,8 @@ export type Db = pg.Pool;
 export type Tx = pg.PoolClient;
 export type Q = Db | Tx;
 
-export function createDb(url: string): Db {
-  return new pg.Pool({ connectionString: url, max: 10 });
+export function createDb(url: string, max = 10): Db {
+  return new pg.Pool({ connectionString: url, max });
 }
 
 export async function one<T = any>(q: Q, sql: string, params: unknown[] = []): Promise<T | undefined> {
@@ -44,18 +44,25 @@ function migrationsDir() {
   return here.includes('dist-server') ? path.resolve(here, '../../server/migrations') : path.join(here, 'migrations');
 }
 
-export async function migrate(db: Db): Promise<string[]> {
+export type Migration = { name: string; sql: string };
+
+async function readMigrations(): Promise<Migration[]> {
+  const dir = migrationsDir();
+  const files = (await readdir(dir)).filter((f) => f.endsWith('.sql')).sort();
+  return Promise.all(files.map(async (f) => ({ name: f, sql: await readFile(path.join(dir, f), 'utf8') })));
+}
+
+/** `list` : migrations embarquées (fonctions serverless sans accès au dossier). */
+export async function migrate(db: Db, list?: Migration[]): Promise<string[]> {
+  const all = list ?? (await readMigrations());
   const c = await db.connect();
   try {
     await c.query('select pg_advisory_lock(424242)');
     await c.query('create table if not exists schema_migrations (name text primary key, applied_at timestamptz not null default now())');
     const done = new Set((await many(c, 'select name from schema_migrations')).map((r) => r.name));
-    const dir = migrationsDir();
-    const files = (await readdir(dir)).filter((f) => f.endsWith('.sql')).sort();
     const applied: string[] = [];
-    for (const f of files) {
+    for (const { name: f, sql } of all) {
       if (done.has(f)) continue;
-      const sql = await readFile(path.join(dir, f), 'utf8');
       await c.query('begin');
       try {
         await c.query(sql);

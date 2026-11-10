@@ -1,0 +1,23 @@
+# Déploiement Netlify de Yoon (environnement de TEST en mode démo).
+# Interface : dist-web · API : fonction netlify/functions/api.mts sur /api/*
+# Base : Netlify Database (provisionnée grâce à @netlify/database) · Médias : Netlify Blobs.
+[build]
+  command = "node scripts/embed-migrations.mjs && npx vite build"
+  publish = "dist-web"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["pg-native"]
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"

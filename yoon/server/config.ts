@@ -26,6 +26,9 @@ const schema = z.object({
   JOBS_ENABLED: bool.default(true),
   SERVE_WEB: bool.default(false),
   TRUST_PROXY: bool.default(false),
+  // false sur un hébergement serverless (Netlify) : l'interface se rafraîchit périodiquement.
+  LIVE_SSE: bool.default(true),
+  MEDIA_STORAGE: z.enum(['local', 'netlify_blobs']).default('local'),
 });
 
 export type Config = z.infer<typeof schema>;

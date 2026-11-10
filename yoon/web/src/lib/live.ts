@@ -22,6 +22,7 @@ async function loop(client: boolean, ctrl: AbortController) {
   while (!ctrl.signal.aborted) {
     try {
       const res = await fetch('/api/live', { headers: client ? { 'x-client-token': clientToken.get() } : {}, signal: ctrl.signal, credentials: 'same-origin' });
+      if (res.status === 204) return; // serveur sans flux temps réel : le rafraîchissement périodique suffit
       if (!res.ok || !res.body) throw new Error('live');
       delay = 2000;
       const reader = res.body.getReader();
