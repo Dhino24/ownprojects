@@ -1,0 +1,9 @@
+node_modules/
+dist-web/
+dist-server/
+storage/
+.env
+.env.*
+!.env.example
+screens/
+*.log

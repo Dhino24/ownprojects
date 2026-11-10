@@ -1,0 +1,410 @@
+MVP – App de livraison pour le Sénégal
+
+
+
+
+MVP – App de livraison pour le Sénégal
+  ​Nov 9, 2026       ·   ​@Adama
+
+
+
+
+Vision et objectif
+Le MVP vérifie une seule chose : un commerçant de Dakar peut confier ses livraisons à
+des livreurs à moto par WhatsApp, et le client reçoit sa commande sans appels répétés
+pour se faire localiser.
+
+Problème. Au Sénégal, beaucoup de lieux n'ont pas d'adresse formelle. Le livreur appelle
+plusieurs fois le client, le paiement est souvent en cash, et les commandes passent par
+WhatsApp ou les réseaux sociaux.
+
+Promesse. Une commande en moins de 1 minute, une position GPS ou un repère clair, un
+livreur proche attribué rapidement, un paiement par mobile (Wave ou Orange Money), et
+un suivi dans la conversation WhatsApp.
+
+Hypothèse à valider. Les commerçants paient pour une livraison fiable, et les livreurs
+acceptent de travailler par WhatsApp si cela leur apporte plus de courses et moins
+d'appels.
+
+Hors objectif. Le MVP ne cherche pas à formaliser le secteur. Il facilite les livraisons dans
+le contexte sénégalais.
+
+
+Utilisateurs
+Quatre profils, dont trois utilisent le service au quotidien.
+
+
+
+
+                                                                                        Page 1 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+  Profil                      Qui                         Besoin principal            Canal dans le MVP
+
+  Commerçant                  Boutique, restaurant,       Envoyer une livraison       WhatsApp
+                              vendeur Instagram ou        vite et savoir où elle en
+                              TikTok                      est
+
+  Client                      Particulier qui reçoit le   Être trouvé sans            WhatsApp
+                              colis                       appeler, payer
+                                                          facilement
+
+  Livreur                     Livreur à moto ou scooter   Plus de courses, moins      WhatsApp
+                                                          d'appels, paiement clair
+
+  Admin                       Équipe du service           Attribuer, corriger,        Tableur partagé +
+                                                          suivre le cash et les       groupe WhatsApp
+                                                          litiges
+
+
+
+
+Périmètre du MVP
+Le MVP couvre la région de Dakar (départements de Dakar, Pikine, Guédiawaye, Rufisque
+et Keur Massar), un type de course (point A vers point B, colis ou repas), un seul canal
+(WhatsApp) et un seul mode de paiement (Wave ou Orange Money). Les autres services
+techniques sont prévus dès la conception, mais pas activés.
+
+Inclus
+
+       Création de commande par WhatsApp (message guidé ou formulaire).
+       Localisation du client : position WhatsApp, repère en texte, note vocale, photo du lieu.
+       Attribution manuelle par l'admin au livreur le plus proche, par WhatsApp.
+       Suivi par messages dans la conversation : statuts et position du livreur en direct.
+       Paiement mobile uniquement : Wave ou Orange Money, sans cash. Confirmation
+       vérifiée à la main au départ (capture d'écran ou SMS).
+       Preuve de livraison : code à 4 chiffres donné par le client, ou photo.
+       Suivi des paiements et des reversements, récapitulatif quotidien envoyé sur
+       WhatsApp.
+       Tarifs par zone, pas au kilomètre.
+       Messages en français et en wolof (textes courts, notes vocales).
+
+Exclus (plus tard)
+
+       Paiement en cash.
+
+
+
+
+                                                                                                    Page 2 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+       Confirmation automatique des paiements Wave et Orange Money par API : prévue,
+       pas activée.
+       App Android pour les livreurs, page web, tableau de bord dédié : prévus, pas activés.
+       Attribution automatique, courses groupées, optimisation d'itinéraires.
+       Les autres régions que Dakar.
+       Assurance, crédit, financement de moto ou de permis, notation, fidélité.
+       Intégration automatique avec les boutiques en ligne.
+
+
+Parcours d'une livraison
+
+
+
+
+parcours d'une livraison · 7 étapes, 1 décision
+
+Le client partage sa position avant l'offre au livreur. Si le livreur refuse ou ne répond pas en
+30 secondes, l'offre passe au suivant. En fin de journée, le récap indique les paiements
+reçus et ce qui revient à chaque livreur.
+
+
+Écrans et fonctionnalités
+Tout passe par WhatsApp pour le moment : messages guidés, boutons, position, notes
+vocales. Il n'y a pas d'app dédiée ni de page web au départ.
+
+Commerçant (WhatsApp)
+
+   1. Nouvelle livraison : nom et numéro du client, lieu de retrait, lieu de livraison, montant
+       de la commande.
+   2. Confirmation du prix selon la zone, avant envoi.
+   3. Suivi des courses en cours, avec le statut de chacune.
+
+
+
+                                                                                           Page 3 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+   4. Historique et récapitulatif du jour : courses faites, paiements reçus.
+
+Client (WhatsApp)
+
+   1. Demande de localisation : partager sa position WhatsApp, ajouter un repère, une
+      photo ou une note vocale.
+   2. Suivi : statut par message, position du livreur en direct, message ou appel WhatsApp
+       au livreur.
+   3. Code de livraison à donner au livreur à la remise.
+   4. Paiement : Wave ou Orange Money, avec confirmation dans la conversation.
+
+Livreur (WhatsApp)
+
+   1. Disponible ou indisponible : un message ou un bouton.
+   2. Nouvelle course : message avec lieu de retrait, zone de livraison et gain. Boutons
+       Accepter et Refuser, 30 secondes pour répondre.
+   3. Fiche de course : position du client, repères, photo, note vocale, message ou appel en
+      un geste.
+   4. Fin de course : saisie du code client ou photo.
+   5. Gains du jour, envoyés en message.
+
+Admin (tableur et groupe WhatsApp)
+
+   1. Suivi des livreurs disponibles et des courses en cours dans un tableur partagé.
+   2. Attribution manuelle d'une course, réattribution en cas de refus ou de retard.
+   3. Gestion des zones et des tarifs.
+   4. Suivi des paiements, des reversements et des litiges.
+
+
+Règles métier
+Les montants sont à fixer pendant le pilote, après observation des prix pratiqués par les
+livreurs.
+
+
+  Sujet                                  Règle proposée
+
+  Tarification                           Prix fixe par paire de zones (zone de retrait vers
+                                         zone de livraison), affiché avant l'envoi. Pas de
+                                         calcul au kilomètre.
+
+  Partage du prix                        Une part pour le livreur, une commission pour le
+                                         service. Taux à définir.
+
+
+
+
+                                                                                              Page 4 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+  Sujet                                   Règle proposée
+
+  Paiement de la course                   Wave ou Orange Money uniquement. Le
+                                          commerçant paie la course, ou le client la paie avec
+                                          la commande, selon l'accord de départ.
+
+  Paiement de la commande                 Le client paie le commerçant par Wave ou Orange
+                                          Money. Le livreur ne manipule pas d'argent. L'admin
+                                          suit les paiements.
+
+  Attribution                             Le livreur le plus proche et disponible reçoit l'offre.
+                                          Sans réponse en 30 secondes, l'offre passe au
+                                          suivant.
+
+  Preuve de livraison                     Code à 4 chiffres donné par le client, ou photo si le
+                                          client est injoignable.
+
+  Client introuvable                      Deux tentatives d'appel ou de message, puis
+                                          course annulée avec frais de déplacement pour le
+                                          commerçant.
+
+  Annulation                              Gratuite avant l'attribution. Après attribution, frais
+                                          minimum pour le livreur.
+
+  Litiges                                 Signalement depuis l'app, traitement manuel par
+                                          l'admin pendant le pilote.
+
+
+
+
+Spécifications techniques
+Le MVP active uniquement WhatsApp. Les autres services sont prévus dès la conception,
+pour être branchés ensuite sans tout refaire.
+
+
+  Brique                      Maintenant (MVP)                        Prévu ensuite
+
+  Commandes                   WhatsApp Business (application ou       Formulaire web, intégration aux
+                              API, à vérifier)                        boutiques en ligne
+
+  Côté livreur                Conversation WhatsApp : boutons,        App Android légère, mode hors ligne
+                              position, notes vocales
+
+  Localisation                Position WhatsApp, repère en texte,     Repères mémorisés, carte intégrée
+                              photo, note vocale
+
+  Paiement                    Wave et Orange Money par transfert      Confirmation automatique par API
+                              ou lien, confirmation vérifiée à la     marchand (accès à vérifier)
+                              main (capture ou SMS)
+
+
+
+
+                                                                                                        Page 5 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+  Brique                      Maintenant (MVP)                           Prévu ensuite
+
+  Notifications               Messages WhatsApp                          SMS, notifications push
+
+  Admin                       Tableur partagé et groupe                  Tableau de bord web
+                              WhatsApp interne
+
+  Données                     Tableur au départ, données                 Base de données hébergée
+                              personnelles protégées
+
+  Langues                     Français et wolof, textes courts et        Interface complète en wolof
+                              notes vocales
+
+
+Les noms et conditions de ces services (API WhatsApp, Wave, Orange Money) sont des
+pistes à vérifier, pas des choix validés.
+
+
+Pilote, indicateurs et risques
+Le pilote se fait dans la région de Dakar, en commençant par une ou deux communes, avec
+un petit groupe de livreurs et de commerçants volontaires.
+
+Étapes
+
+   1. Terrain : suivre quelques livreurs pendant une journée, noter les prix, les problèmes
+       d'adresse et de paiement.
+   2. Prototype WhatsApp : commande, attribution manuelle, lien de suivi, code de
+       livraison.
+   3. Pilote : quelques livreurs et commerçants, suivi quotidien et corrections rapides.
+   4. Décision : continuer, ajuster ou arrêter selon les indicateurs.
+
+Indicateurs de succès (seuils à fixer avec les premiers chiffres du terrain)
+
+
+  Indicateur                                                        Ce qu'il dit
+
+  Courses livrées par jour                                          Le service est utilisé
+
+  Part de courses réussies du premier coup                          La localisation fonctionne
+
+  Nombre d'appels livreur-client par course                         L'app réduit les appels
+
+  Délai entre la commande et l'attribution                          L'attribution est rapide
+
+  Commerçants qui recommandent une 2e course                        Le service apporte de la valeur
+
+  Paiements non confirmés en fin de journée                         Le suivi des paiements est fiable
+
+
+Risques
+
+
+                                                                                                        Page 6 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+       Pas assez de commandes au départ : partir de commerçants qui livrent déjà
+       beaucoup.
+       Livreurs qui contournent l'app : leur garantir des courses régulières.
+       Paiement non confirmé ou contesté : vérification manuelle au départ, captures et SMS
+       conservés. Compte marchand Wave ou Orange Money long à ouvrir : démarrer avec
+       un compte simple du service.
+       Accès à l'API WhatsApp plus long que prévu : démarrer avec WhatsApp Business
+       classique.
+       Cadre légal du transport et de la livraison : à faire valider avant le lancement.
+
+Questions ouvertes
+
+       Quelles communes de la région de Dakar pour commencer ?
+       Quelle association ou quel groupe de livreurs comme partenaire ?
+       Qui paie la course : le commerçant, le client, ou les deux ?
+       Quel budget et quel délai pour le prototype ?
+
+
+Messages WhatsApp
+Huit messages couvrent tout le parcours. Les variables sont entre accolades. Le wolof
+mêlle les mots français d'usage ; il est à faire relire par un locuteur avant le pilote. Si le
+service passe par l'API WhatsApp, les premiers messages envoyés par le service devront
+peut-être être des modèles approuvés (à vérifier).
+
+1. Nouvelle commande (au commerçant)
+
+FR : Bonjour {nom} ! Pour une livraison, envoyez : 1) le nom et le numéro du client, 2) le lieu
+de retrait, 3) le lieu de livraison, 4) le montant de la commande. Prix de la course : {prix}
+FCFA.
+
+Wolof : Salaam aleekum {nom} ! Ngir livraison, yonnee ma : 1) tur ak numéro client bi, 2) fu
+ma ko wara jukki, 3) fu ma ko wara yobbu, 4) montant commande bi. Prix course bi : {prix}
+FCFA.
+
+2. Demande de localisation (au client)
+
+FR : Bonjour {nom}, {commerçant} vous envoie une commande. Pour que le livreur vous
+trouve, envoyez votre position WhatsApp, puis un repère (ex. « en face de la pharmacie »),
+une photo ou une note vocale.
+
+Wolof : Salaam aleekum {nom}, {commerçant} dafa la yonnee commande. Ngir livreur bi gis
+la, yonnee ma sa position WhatsApp, te yokk ko benn repère, nataal walla note vocale.
+
+3. Offre de course (au livreur)
+
+
+
+
+                                                                                             Page 7 of 8
+MVP – App de livraison pour le Sénégal
+
+
+
+
+FR : Nouvelle course ! Retrait : {lieu retrait}. Livraison : {zone}. Gain : {gain} FCFA.
+Répondez en 30 secondes : [Accepter] [Refuser].
+
+Wolof : Course bu bees ! Jukki : {lieu retrait}. Yobbu : {zone}. Ngain : {gain} FCFA. Tontu ci
+30 segonds : [Nangu] [Baal ma].
+
+4. Livreur en route (au client)
+
+FR : Votre livreur {prénom} est en route. Suivez sa position ci-dessous. Gardez votre
+téléphone près de vous.
+
+Wolof : Sa livreur {prénom} mu ngi ci yoon. Toppal ko ci position bi ci suuf. Wacc sa
+téléphone ci sa wet.
+
+5. Code de livraison (au client)
+
+FR : Votre code de livraison : {code}. Donnez-le au livreur seulement quand vous avez reçu
+votre commande.
+
+Wolof : Sa code livraison : {code}. Jox ko livreur bi rekk bu la commande bi egg.
+
+6. Paiement (au client)
+
+FR : Montant à payer : {montant} FCFA. Payez par Wave ou Orange Money au {numéro},
+puis envoyez la capture d'écran ici.
+
+Wolof : Montant bi ngay fay : {montant} FCFA. Fay ak Wave walla Orange Money ci
+{numéro}, te yonnee ma capture bi fii.
+
+7. Client introuvable (au client)
+
+FR : Votre livreur est arrivé mais ne vous trouve pas. Renvoyez votre position ou appelez-
+le au {numéro livreur}. Sans réponse dans 10 minutes, la course sera annulée.
+
+Wolof : Sa livreur agsi na waaye gisu la. Yonnee ma sa position walla woo ko ci {numéro
+livreur}. Su tontoowul ci 10 minutes, course bi dina neenal.
+
+8. Récap du jour (au commerçant et au livreur)
+
+FR : Récap du {date} : {nombre} livraisons faites, {montant} FCFA de paiements reçus. Une
+question ? Répondez à ce message.
+
+Wolof : Récap bi {date} : {nombre} livraison def nañu, {montant} FCFA paiement jot nañu.
+Am nga laaj ? Tontu ci message bii.
+
+
+
+
+                                                                                           Page 8 of 8
+
