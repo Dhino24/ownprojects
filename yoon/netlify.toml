@@ -10,7 +10,9 @@
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["pg-native"]
+  # Dépendances chargées depuis node_modules (et non fusionnées) : certaines utilisent require() dynamique,
+  # qui plante dans un bundle ESM (« Dynamic require of "events" is not supported »).
+  external_node_modules = ["pg", "pg-native", "fastify", "@fastify/cookie", "@fastify/multipart", "@fastify/rate-limit", "@fastify/static", "zod", "@netlify/database", "@netlify/blobs"]
 
 [[redirects]]
   from = "/*"
