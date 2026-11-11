@@ -49,6 +49,17 @@ async function init() {
 }
 
 export async function handle(req: Request, ip?: string): Promise<Response> {
+  try {
+    return await handleInner(req, ip);
+  } catch (e: any) {
+    // Visible dans les journaux de la fonction Netlify ; détail renvoyé seulement en mode démo.
+    console.error('[yoon] échec de la fonction :', e?.stack ?? e);
+    const detail = process.env.DEMO_MODE === 'true' ? ` (${e?.message ?? e})` : '';
+    return Response.json({ error: 'server_unavailable', message: `Serveur indisponible au démarrage${detail}.` }, { status: 503 });
+  }
+}
+
+async function handleInner(req: Request, ip?: string): Promise<Response> {
   ready ??= init().catch((e) => {
     ready = null;
     throw e;
