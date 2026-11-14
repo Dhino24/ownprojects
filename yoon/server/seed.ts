@@ -31,6 +31,7 @@ export async function seedDemo(ctx: Ctx, opts: { orders?: boolean } = { orders: 
   const v = await one(db, `insert into pricing_versions(note, courier_share_bps, cancel_fee, cancel_courier_share_bps, not_found_fee, not_found_wait_minutes, is_demo, active)
     values ('DÉMO — tarifs d’exemple non validés', 8000, 500, 10000, 1000, 10, true, true) returning id`);
   const near = new Set(['Dakar']);
+  const pairs: [number, number, number][] = [];
   for (const a of zones) for (const b of zones) {
     let price = 1500;
     if (a.id === b.id) price = 1000;
@@ -38,8 +39,14 @@ export async function seedDemo(ctx: Ctx, opts: { orders?: boolean } = { orders: 
     else if ([a.department, b.department].includes('Rufisque')) price = 4000;
     else if ([a.department, b.department].includes('Keur Massar')) price = 3500;
     else price = 2500;
-    await db.query('insert into pricing_pairs(version_id, from_zone_id, to_zone_id, price) values ($1,$2,$3,$4)', [v.id, a.id, b.id, price]);
+    pairs.push([a.id, b.id, price]);
   }
+  // Un seul aller-retour : sur un hébergement sans serveur, chaque requête coûte cher.
+  await db.query(
+    `insert into pricing_pairs(version_id, from_zone_id, to_zone_id, price)
+     select $1, f, t, p from unnest($2::int[], $3::int[], $4::int[]) as u(f, t, p)`,
+    [v.id, pairs.map((x) => x[0]), pairs.map((x) => x[1]), pairs.map((x) => x[2])],
+  );
   await db.query(`insert into app_settings(key, value) values ('service_payment_numbers', $1), ('require_fee_before_offer', 'false') on conflict do nothing`,
     [JSON.stringify({ wave: '+221770009999', orange_money: '+221780009999' })]);
 

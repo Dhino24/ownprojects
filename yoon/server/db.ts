@@ -11,8 +11,12 @@ export type Db = pg.Pool;
 export type Tx = pg.PoolClient;
 export type Q = Db | Tx;
 
-export function createDb(url: string, max = 10): Db {
-  return new pg.Pool({ connectionString: url, max });
+export function createDb(url: string, max = 10, serverless = false): Db {
+  return new pg.Pool({
+    connectionString: url, max,
+    // Sans serveur : base distante, instances gelées entre deux requêtes.
+    ...(serverless ? { idleTimeoutMillis: 10_000, connectionTimeoutMillis: 8_000, keepAlive: true } : {}),
+  });
 }
 
 export async function one<T = any>(q: Q, sql: string, params: unknown[] = []): Promise<T | undefined> {

@@ -41,7 +41,7 @@ async function init() {
     MEDIA_STORAGE: 'netlify_blobs',
     TRUST_PROXY: 'true',
   });
-  const db = createDb(cfg.DATABASE_URL, 3);
+  const db = createDb(cfg.DATABASE_URL, 3, true);
   db.on('error', (e) => console.error('[yoon] erreur de connexion à la base :', e.message));
   await migrate(db, MIGRATIONS);
   const { app, ctx } = await buildApp(cfg, db, { logger: false });
@@ -50,7 +50,9 @@ async function init() {
     const c = await db.connect();
     try {
       await c.query('select pg_advisory_lock(424243)');
-      await seedDemo(ctx);
+      // Sans serveur permanent : on crée les comptes et les tarifs, pas les livraisons d'exemple
+      // (chaque requête vers une base distante coûte du temps, et la première ouverture est limitée).
+      await seedDemo(ctx, { orders: false });
     } finally {
       await c.query('select pg_advisory_unlock(424243)').catch(() => {});
       c.release();
@@ -71,12 +73,28 @@ export async function handle(req: Request, ip?: string): Promise<Response> {
   }
 }
 
+/** Limite d'une fonction Netlify : ~10 s. On garde une marge pour répondre proprement. */
+const BOOT_BUDGET_MS = Number(process.env.BOOT_BUDGET_MS ?? 7000);
+const TIMEOUT = Symbol('timeout');
+
 async function handleInner(req: Request, ip?: string): Promise<Response> {
   ready ??= init().catch((e) => {
     ready = null;
     throw e;
   });
-  const { app, ctx } = await ready;
+  // La première ouverture crée les tables (et les données de démo) : cela peut dépasser le temps imparti
+  // à une seule requête. On répond alors « initialisation en cours » et le travail se poursuit ;
+  // la requête suivante trouve l'application prête.
+  const started = ready;
+  const timer = new Promise<typeof TIMEOUT>((r) => setTimeout(() => r(TIMEOUT), BOOT_BUDGET_MS).unref?.());
+  const raced = await Promise.race([started, timer]);
+  if (raced === TIMEOUT) {
+    return Response.json(
+      { error: 'starting', message: 'Première ouverture : le serveur prépare la base de données. Réessayez dans quelques secondes.' },
+      { status: 503, headers: { 'retry-after': '5' } },
+    );
+  }
+  const { app, ctx } = raced;
   // Pas de tâche de fond en serverless : les offres échues sont expirées au fil des requêtes (idempotent).
   if (Date.now() - lastSweep > 2000) {
     lastSweep = Date.now();
