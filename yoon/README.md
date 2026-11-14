@@ -63,6 +63,16 @@ BASE=http://localhost:8787 npm run screens     # nécessite Playwright (npm i -D
 
 Le script joue le parcours complet dans Chromium (GPS simulé), puis capture chaque écran à 360, 390 et 1440 px dans `screens/` et échoue en cas de débordement horizontal ou d'erreur JavaScript. Il suppose une base de démo fraîche.
 
+## Déploiement sur Netlify
+
+L'API tourne en fonction Netlify (`netlify/functions/api.mts` → `/api/*`), l'interface est servie par le CDN.
+
+- La fonction est **assemblée en un seul fichier** par `scripts/build-function.mjs` : aucune dépendance n'est résolue à l'exécution. C'est volontaire — plusieurs dépendances sont passées au format « module ES », que le Node de la plateforme ne sait pas charger depuis un module classique.
+- Base de données : `DATABASE_URL` (PostgreSQL externe, par exemple Neon — utiliser l'adresse « pooler »). Sans cette variable, Netlify Database est utilisée si elle est disponible.
+- Médias : Netlify Blobs. Temps réel : remplacé par un rafraîchissement périodique (`/api/live` répond 204).
+- Variables à définir sur le site : `APP_SECRET`, `DATABASE_URL`, et `DEMO_MODE=true` pour un environnement de test.
+- Première ouverture : les tables (et, en mode démo, les comptes) sont créées à la première requête. Si cela dépasse le temps imparti, l'API répond « initialisation en cours » et la requête suivante aboutit.
+
 ## Tester en ligne (Render, gratuit)
 
 Le fichier [`render.yaml`](../render.yaml) à la racine du dépôt décrit un environnement de **test** (mode démo, données fictives) : un service web Node + une base PostgreSQL gratuite.

@@ -8,3 +8,4 @@ storage/
 screens/
 *.log
 .netlify/
+netlify/functions-build/
