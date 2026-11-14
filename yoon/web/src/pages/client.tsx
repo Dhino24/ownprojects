@@ -112,7 +112,7 @@ export function ClientHome() {
             </section>
             <div>
               {d.code?.value && (
-                <section className="card tracking">
+                <section className="card tracking codecard">
                   <span className="eyebrow">À la remise du colis</span>
                   <h2 style={{ marginTop: 10 }}>Votre code de livraison</h2>
                   <div className="code" aria-label={`Code ${d.code.value.split('').join(' ')}`}>{d.code.value.split('').map((n: string, i: number) => <span key={i}>{n}</span>)}</div>

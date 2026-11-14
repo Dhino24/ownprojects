@@ -11,8 +11,11 @@ function Shell({ children }: { children: React.ReactNode }) {
       <Banners />
       <div className="authwrap">
         <div style={{ width: '100%', maxWidth: 440 }}>
-          <div className="brand" style={{ marginBottom: 6 }}><span className="mark">↗</span>yoon<span style={{ color: '#97b96a' }}>.</span></div>
-          <div className="subtitle" style={{ marginBottom: 20 }}>La livraison, simplement.</div>
+          <div className="authhero">
+            <div className="brand"><span className="mark">↗</span>yoon<span>.</span></div>
+            <p>La livraison à moto, simplement. Partout à Dakar.</p>
+            <svg viewBox="0 0 170 120" aria-hidden="true"><path d="M10 110C30 60 80 90 100 60S130 20 160 14" fill="none" stroke="#ffc531" strokeWidth="4" strokeLinecap="round" strokeDasharray="2 11" /><circle cx="10" cy="110" r="8" fill="#fff" /><path d="M160 30c-11-12-14-19-14-24a14 14 0 0 1 28 0c0 5-3 12-14 24z" fill="#ffc531" /></svg>
+          </div>
           <section className="card authcard">{children}</section>
           <p className="bottomnote">Pensé pour Dakar. Fait pour vous. ↗</p>
         </div>

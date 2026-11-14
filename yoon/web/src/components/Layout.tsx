@@ -38,7 +38,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   return <SessionCtx.Provider value={{ me, meta, loading, error, reload }}>{children}</SessionCtx.Provider>;
 }
 
-export type NavItem = { to: string; icon: string; label: string; end?: boolean; mobile?: boolean; count?: number };
+export type NavItem = { to: string; icon: string; label: string; end?: boolean; mobile?: boolean; count?: number; primary?: boolean };
 
 export const HOME: Record<Role, string> = { merchant: '/m', courier: '/l', admin: '/a' };
 
@@ -82,7 +82,7 @@ export function RoleLayout({ role, label, nav }: { role: Role; label: string; na
         <div className="subtitle">La livraison, simplement.</div>
         <div className="navlabel">Espace {label.toLowerCase()}</div>
         <nav aria-label="Navigation principale">
-          {nav.map((n) => <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `navbtn ${isActive ? 'active' : ''}`}><Icon name={n.icon} />{n.label}{!!n.count && <span className="count">{n.count}</span>}</NavLink>)}
+          {nav.filter((n) => !n.to.endsWith('/plus')).map((n) => <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `navbtn ${isActive ? 'active' : ''}`}><Icon name={n.icon} />{n.label}{!!n.count && <span className="count">{n.count}</span>}</NavLink>)}
         </nav>
         <div className="sidebarfooter">
           <div className="helpbox"><span className="flex"><Icon name="chat" /><b>On est ensemble.</b></span><p>Une question ? L’équipe Yoon vous répond sur WhatsApp.</p></div>
@@ -102,7 +102,7 @@ export function RoleLayout({ role, label, nav }: { role: Role; label: string; na
         <div className="bottomnote">Pensé pour Dakar. Fait pour vous. ↗</div>
       </main>
       <nav className="bottomnav" aria-label="Navigation mobile">
-        {nav.filter((n) => n.mobile !== false).slice(0, 5).map((n) => <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => (isActive ? 'active' : '')}><Icon name={n.icon} />{n.label}</NavLink>)}
+        {nav.filter((n) => n.mobile !== false).slice(0, 5).map((n) => <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `${n.primary ? 'fab' : ''} ${isActive ? 'active' : ''}`}><Icon name={n.icon} />{n.label}</NavLink>)}
       </nav>
     </>
   );

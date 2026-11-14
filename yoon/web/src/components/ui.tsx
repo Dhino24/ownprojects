@@ -74,9 +74,10 @@ export function Stat({ label, value, sub, icon, to }: { label: string; value: Re
   return to ? <Link className="stat" to={to}>{inner}</Link> : <div className="stat">{inner}</div>;
 }
 
-const ORANGE: OrderStatus[] = ['awaiting_location', 'ready', 'offered'];
+const ORANGE: OrderStatus[] = ['awaiting_location', 'ready'];
+const BLUE: OrderStatus[] = ['offered', 'assigned', 'at_pickup', 'picked_up', 'in_delivery'];
 export function StatusTag({ status }: { status: OrderStatus }) {
-  const cls = status === 'incident' ? 'red' : status === 'cancelled' ? 'grey' : ORANGE.includes(status) ? 'orange' : '';
+  const cls = status === 'incident' ? 'red' : status === 'cancelled' ? 'grey' : ORANGE.includes(status) ? 'orange' : BLUE.includes(status) ? 'blue' : '';
   return <span className={`tag ${cls}`}>{ORDER_STATUS_LABEL[status] ?? status}</span>;
 }
 export function PayTag({ status }: { status: ObligationStatus | null }) {

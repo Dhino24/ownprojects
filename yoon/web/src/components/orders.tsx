@@ -9,15 +9,15 @@ export function OrderRow({ o, to, showShop }: { o: any; to: string; showShop?: b
   return (
     <Link className="delivery" to={to}>
       <div className="between">
-        <div className="flex">
-          <div className="parcelicon"><Icon name="box" /></div>
-          <div><b>{o.customer_name}</b><small>#{o.ref} · {when(o.created_at)}{showShop ? ` · ${o.shop_name}` : ''}</small></div>
-        </div>
+        <div style={{ minWidth: 0 }}><b>{o.customer_name}</b><small>#{o.ref} · {when(o.created_at)}{showShop ? ` · ${o.shop_name}` : ''}</small></div>
         <StatusTag status={o.status} />
       </div>
-      <div className="route"><span>{o.pickup_zone}</span><Icon name="arrow" /><span>{o.dest_zone}</span>
-        {o.fee_payment && <PayTag status={o.fee_payment} />}
-        <b style={{ marginLeft: 'auto', color: '#3f5c3b' }}>{money(o.delivery_price)}</b></div>
+      <div className="routeline">
+        <i /><span>{o.pickup_zone}</span>
+        <span className="price">{money(o.delivery_price)}{o.fee_payment && <small><PayTag status={o.fee_payment} /></small>}</span>
+        <span className="bar" /><span />
+        <i className="to" /><span><b style={{ fontSize: 13.5 }}>{o.dest_zone}</b></span>
+      </div>
     </Link>
   );
 }
@@ -95,7 +95,13 @@ export function progressIndex(s: OrderStatus) {
   if (s === 'at_pickup') return 2;
   return Math.max(0, PROGRESS.indexOf(s)) + 1;
 }
+const STEP_LABELS = ['Position', 'Livreur', 'Retrait', 'En route', 'Livrée'];
 export function Progress({ status }: { status: OrderStatus }) {
   const n = progressIndex(status);
-  return <div className="progress" aria-label={`Étape ${n} sur 5`}>{[1, 2, 3, 4, 5].map((i) => <span key={i} className={i <= n ? 'on' : ''} />)}</div>;
+  if (status === 'cancelled') return null;
+  return (
+    <div className="stepper" role="img" aria-label={`Étape ${n} sur 5`}>
+      {STEP_LABELS.map((l, i) => <div key={l} className={`${i < n ? 'on' : ''} ${i === n - 1 && status !== 'delivered' ? 'now' : ''}`}>{l}</div>)}
+    </div>
+  );
 }

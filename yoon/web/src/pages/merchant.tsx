@@ -11,7 +11,13 @@ import { useSession } from '../components/Layout';
 import { OBLIGATION_KIND_LABEL, METHOD_LABEL, ORDER_STATUS_LABEL, type PaymentMethod } from '../../../shared/contract';
 
 const Package = () => (
-  <svg className="package" viewBox="0 0 160 160" aria-hidden="true"><path d="m20 48 58-25 61 26-60 28z" fill="#e4f4b8" /><path d="m20 48 59 29v63l-59-31z" fill="#b5cd8e" /><path d="m79 77 60-28v63l-60 28z" fill="#d0e6a6" /><path d="m50 35 61 28v32l-16 8V70L35 42z" fill="#6f8e5a" /><path d="m100 118 23-10 M100 123l15-7" stroke="#7a9664" strokeWidth="3" /></svg>
+  <svg className="package" viewBox="0 0 230 230" aria-hidden="true">
+    <path d="M40 200C40 140 110 150 120 110S150 40 200 36" fill="none" stroke="#ffffff2e" strokeWidth="22" strokeLinecap="round" />
+    <path d="M40 200C40 140 110 150 120 110S150 40 200 36" fill="none" stroke="#ffc531" strokeWidth="5" strokeLinecap="round" strokeDasharray="2 13" />
+    <circle cx="40" cy="200" r="13" fill="#15172b" stroke="#fff" strokeWidth="5" />
+    <g transform="translate(200 36)"><path d="M0 22C-16 4-20-6-20-14a20 20 0 0 1 40 0c0 8-4 18-20 36z" fill="#ffc531" /><circle cy="-14" r="7" fill="#15172b" /></g>
+    <g transform="translate(118 112) rotate(-28)"><rect x="-20" y="-14" width="40" height="28" rx="8" fill="#fff" /><path d="M-20-2h40M0-14v28" stroke="#2a44f5" strokeWidth="4" /></g>
+  </svg>
 );
 
 export function markersFor(d: { location?: any; courier?: any }): Marker[] {

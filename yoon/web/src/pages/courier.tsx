@@ -56,7 +56,14 @@ function Countdown({ expiresAt, serverNow, onEnd }: { expiresAt: string; serverN
     return () => clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiresAt]);
-  return <span className={`tag ${left <= 10 ? 'red' : 'orange'}`} role="timer" aria-live="off">{left > 0 ? `${left} s pour répondre` : 'Offre expirée'}</span>;
+  const total = useRef(Math.max(calc(), 1));
+  const C = 2 * Math.PI * 27;
+  return (
+    <div className={`ring ${left <= 10 ? 'low' : ''}`} role="timer" aria-label={left > 0 ? `${left} secondes pour répondre` : 'Offre expirée'}>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle className="bg" cx="32" cy="32" r="27" /><circle className="fg" cx="32" cy="32" r="27" strokeDasharray={C} strokeDashoffset={C * (1 - Math.min(1, left / total.current))} /></svg>
+      <b aria-hidden="true">{left}</b>
+    </div>
+  );
 }
 
 export function CourierHome() {
@@ -101,7 +108,7 @@ export function CourierHome() {
                 <p style={{ fontSize: 13 }}>{d.profile.available ? 'Prêt à recevoir votre prochaine course.' : 'Activez votre disponibilité pour recevoir des courses.'}</p>
                 <PositionStatus s={sharing} />
               </section>
-              <section className="card offer">
+              <section className={`card offer ${d.offer && !d.active ? 'offercard' : ''}`}>
                 {d.active ? (
                   <>
                     <span className="tag">Votre course #{d.active.ref}</span>
@@ -111,7 +118,7 @@ export function CourierHome() {
                   </>
                 ) : d.offer ? (
                   <>
-                    <div className="between"><span className="tag">Nouvelle proposition</span><Countdown expiresAt={d.offer.expires_at} serverNow={d.offer.server_now} onEnd={q.reload} /></div>
+                    <div className="between"><div><span className="tag dark">Nouvelle proposition</span><p className="muted" style={{ margin: '10px 0 0', fontSize: 13 }}>Répondez avant la fin du délai</p></div><Countdown expiresAt={d.offer.expires_at} serverNow={d.offer.server_now} onEnd={q.reload} /></div>
                     <div className="bigmoney">{new Intl.NumberFormat('fr-FR').format(d.offer.courier_earning)} <span style={{ fontSize: 17 }}>F CFA</span></div>
                     <p className="muted">Votre gain pour cette course</p>
                     <div className="bill">

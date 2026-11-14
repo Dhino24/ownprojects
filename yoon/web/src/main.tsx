@@ -27,7 +27,7 @@ const AdminCouriers = L('admin', 'AdminCouriers'), AdminIncidents = L('admin', '
 const merchantNav: NavItem[] = [
   { to: '/m', icon: 'home', label: 'Vue d’ensemble', end: true },
   { to: '/m/livraisons', icon: 'box', label: 'Mes livraisons' },
-  { to: '/m/nouvelle', icon: 'plus', label: 'Nouvelle', mobile: true },
+  { to: '/m/nouvelle', icon: 'plus', label: 'Nouvelle', mobile: true, primary: true },
   { to: '/m/paiements', icon: 'wallet', label: 'Paiements' },
   { to: '/m/compte', icon: 'settings', label: 'Mon compte' },
 ];
