@@ -10,6 +10,17 @@ import { seedDemo } from './seed.js';
 import type { Ctx } from './domain/core.js';
 
 let ready: Promise<{ app: FastifyInstance; ctx: Ctx }> | null = null;
+
+// Une erreur asynchrone isolée (connexion à la base coupée, par exemple) ne doit pas arrêter la fonction
+// sans explication : on la journalise et on la restitue à la requête suivante en mode démo.
+let lastFatal: string | null = null;
+for (const ev of ['uncaughtException', 'unhandledRejection'] as const) {
+  process.on(ev, (e: any) => {
+    lastFatal = `${ev}: ${e?.message ?? e}`;
+    console.error('[yoon]', ev, e?.stack ?? e);
+    ready = null;
+  });
+}
 let lastSweep = 0;
 
 async function connectionString(): Promise<string> {
@@ -31,6 +42,7 @@ async function init() {
     TRUST_PROXY: 'true',
   });
   const db = createDb(cfg.DATABASE_URL, 3);
+  db.on('error', (e) => console.error('[yoon] erreur de connexion à la base :', e.message));
   await migrate(db, MIGRATIONS);
   const { app, ctx } = await buildApp(cfg, db, { logger: false });
   if (cfg.DEMO_MODE) {
@@ -54,7 +66,7 @@ export async function handle(req: Request, ip?: string): Promise<Response> {
   } catch (e: any) {
     // Visible dans les journaux de la fonction Netlify ; détail renvoyé seulement en mode démo.
     console.error('[yoon] échec de la fonction :', e?.stack ?? e);
-    const detail = process.env.DEMO_MODE === 'true' ? ` (${e?.message ?? e})` : '';
+    const detail = process.env.DEMO_MODE === 'true' ? ` (${e?.message ?? e}${lastFatal ? ` · ${lastFatal}` : ''})` : '';
     return Response.json({ error: 'server_unavailable', message: `Serveur indisponible au démarrage${detail}.` }, { status: 503 });
   }
 }
