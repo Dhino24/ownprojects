@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Yoon — livraison à moto, région de Dakar (pilote)",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "scripts": {
     "dev": "concurrently -n api,web \"npm:dev:api\" \"npm:dev:web\"",

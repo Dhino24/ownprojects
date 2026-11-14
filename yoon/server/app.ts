@@ -2,7 +2,6 @@ import Fastify from 'fastify';
 import cookie from '@fastify/cookie';
 import multipart from '@fastify/multipart';
 import rateLimit from '@fastify/rate-limit';
-import fastifyStatic from '@fastify/static';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
 import type { Config } from './config.js';
@@ -100,6 +99,7 @@ export async function buildApp(cfg: Config, db: Db, opts: { adapters?: Adapters;
 
   const webDist = path.resolve('dist-web');
   if (cfg.SERVE_WEB && existsSync(webDist)) {
+    const { default: fastifyStatic } = await import('@fastify/static');
     await app.register(fastifyStatic, { root: webDist, wildcard: false });
     app.setNotFoundHandler((req, reply) => {
       if (req.url.startsWith('/api/')) return reply.code(404).send({ error: 'not_found', message: 'Introuvable.' });
