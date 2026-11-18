@@ -47,7 +47,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .top {
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: baseline; gap: 10px;
-  padding: 14px 16px 12px;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
   background: var(--bg);
   border-bottom: 1px solid transparent;
 }
@@ -373,3 +373,17 @@ details.astuce .corps { padding: 11px 13px 0; font-size: 13px; color: var(--txt-
 
 /* Curseur de réglage */
 input[type="range"] { accent-color: var(--repos); height: 28px; }
+
+/* Boîte de dialogue : les cadres bac à sable refusent confirm() */
+.voile {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center;
+  background: #05070ad9; backdrop-filter: blur(3px); padding: 24px;
+}
+.voile[hidden] { display: none; }
+.dialogue {
+  background: var(--bg-2); border: 1px solid var(--line-fort); border-radius: var(--r);
+  padding: 20px 20px 16px; max-width: 360px; width: 100%;
+}
+.dialogue h3 { font-size: 17px; margin-bottom: 8px; }
+.dialogue p { margin: 0 0 18px; font-size: 14px; color: var(--txt-2); line-height: 1.5; }
+.dlg-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }

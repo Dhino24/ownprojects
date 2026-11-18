@@ -17,6 +17,10 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const CLE = 'pont.etat.v2';
 const AUJOURDHUI = utcToIso(Date.now());
 
+// Dans un cadre bac à sable (aperçu d'artefact, intégration), le navigateur refuse
+// les téléchargements lancés par la page. On bascule alors sur le presse-papiers.
+const EN_CADRE = (() => { try { return window.self !== window.top; } catch { return true; } })();
+
 /* ------------------------------------------------------------------- modes */
 
 const MODES = {
@@ -410,6 +414,25 @@ function verifierMode() {
 
 /* ------------------------------------------------------------- événements */
 
+/** Remplace confirm(), refusé dans les cadres bac à sable. */
+function demander() {
+  return new Promise((resoudre) => {
+    const voile = $('#voile');
+    voile.hidden = false;
+    const fin = (reponse) => {
+      voile.hidden = true;
+      $('#dlg-oui').onclick = null;
+      $('#dlg-non').onclick = null;
+      voile.onclick = null;
+      resoudre(reponse);
+    };
+    $('#dlg-oui').onclick = () => fin(true);
+    $('#dlg-non').onclick = () => fin(false);
+    voile.onclick = (e) => { if (e.target === voile) fin(false); };
+    $('#dlg-oui').focus();
+  });
+}
+
 function toast(msg) {
   const t = $('#toast');
   t.textContent = msg;
@@ -560,16 +583,39 @@ function brancher() {
     recalculerBientot();
   });
 
-  // Export .ics
-  $('#btn-ics').addEventListener('click', () => {
+  // Export .ics — téléchargement si la page le permet, presse-papiers sinon.
+  // Un aperçu en cadre refuse les téléchargements : on met alors en avant la
+  // copie du récapitulatif, seule action vraiment utile depuis un téléphone.
+  if (EN_CADRE) {
+    $('#btn-ics').lastChild.textContent = ' Copier le calendrier (.ics) ';
+    $('#btn-ics').classList.remove('primaire');
+    $('#btn-copie').classList.add('primaire');
+    $('#btn-copie').parentNode.prepend($('#btn-copie'));
+    $('#aide-export').innerHTML = 'Cet aperçu ne peut pas télécharger de fichier. '
+      + 'Le récapitulatif se colle dans un message ou une demande de congés ; '
+      + 'le .ics se copie aussi, à enregistrer sur ordinateur sous <code>conges.ics</code> '
+      + 'puis à ouvrir avec ton agenda.';
+  }
+
+  $('#btn-ics').addEventListener('click', async () => {
     if (!resultat.pauses.length) return toast('Aucune pause à exporter');
-    const titre = `Congés ${etat.debut.slice(0, 4)}`;
-    const texte = versIcs(resultat.pauses, { titre, decompte: etat.decompte });
+    const annee = etat.debut.slice(0, 4);
+    const texte = versIcs(resultat.pauses, { titre: `Congés ${annee}`, decompte: etat.decompte });
+
+    if (EN_CADRE) {
+      try {
+        await navigator.clipboard.writeText(texte);
+        toast('Calendrier copié — colle-le dans un fichier .ics');
+      } catch {
+        toast('Copie refusée par le navigateur');
+      }
+      return;
+    }
     const blob = new Blob([texte], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `conges-${etat.debut.slice(0, 4)}.ics`;
+    a.download = `conges-${annee}.ics`;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -601,8 +647,8 @@ function brancher() {
   });
 
   // Réinitialisation
-  $('#btn-reset').addEventListener('click', () => {
-    if (!confirm('Remettre tous les réglages à zéro ?')) return;
+  $('#btn-reset').addEventListener('click', async () => {
+    if (!await demander()) return;
     etat = etatParDefaut(2027);
     syncReglages(); recalculer(); sauver(); changerVue('plan');
     toast('Réglages réinitialisés');

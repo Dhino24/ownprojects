@@ -43,6 +43,9 @@ npm run serve # http://localhost:8080
 node tools/make-icons.mjs  # régénère les icônes PNG
 ```
 
+`dist/index.html` est versionné volontairement : c'est l'application entière en un seul
+fichier, à déposer sur n'importe quel hébergement statique ou à ouvrir directement.
+
 ## Structure
 
 | Fichier | Rôle |

@@ -63,7 +63,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .top {
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: baseline; gap: 10px;
-  padding: 14px 16px 12px;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
   background: var(--bg);
   border-bottom: 1px solid transparent;
 }
@@ -389,6 +389,20 @@ details.astuce .corps { padding: 11px 13px 0; font-size: 13px; color: var(--txt-
 
 /* Curseur de réglage */
 input[type="range"] { accent-color: var(--repos); height: 28px; }
+
+/* Boîte de dialogue : les cadres bac à sable refusent confirm() */
+.voile {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center;
+  background: #05070ad9; backdrop-filter: blur(3px); padding: 24px;
+}
+.voile[hidden] { display: none; }
+.dialogue {
+  background: var(--bg-2); border: 1px solid var(--line-fort); border-radius: var(--r);
+  padding: 20px 20px 16px; max-width: 360px; width: 100%;
+}
+.dialogue h3 { font-size: 17px; margin-bottom: 8px; }
+.dialogue p { margin: 0 0 18px; font-size: 14px; color: var(--txt-2); line-height: 1.5; }
+.dlg-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 </style>
 </head>
 <body>
@@ -428,6 +442,7 @@ input[type="range"] { accent-color: var(--repos); height: 28px; }
         Ajouter à mon agenda (.ics)
       </button>
       <button class="btn" id="btn-copie">Copier le récapitulatif</button>
+      <p class="aide" id="aide-export" style="text-align:center;margin:2px 0 0"></p>
     </div>
 
     <details class="carte note" id="explication" style="margin-top:14px">
@@ -614,6 +629,17 @@ input[type="range"] { accent-color: var(--repos); height: 28px; }
 </nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="voile" id="voile" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="dlg-titre">
+    <h3 id="dlg-titre">Tout réinitialiser&nbsp;?</h3>
+    <p>Le solde, les réglages et les jours contraints reviendront à leur valeur d'origine.</p>
+    <div class="dlg-actions">
+      <button class="btn" id="dlg-non">Annuler</button>
+      <button class="btn danger" id="dlg-oui" style="border-color:var(--interdit)">Réinitialiser</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
 
@@ -1243,6 +1269,10 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const CLE = 'pont.etat.v2';
 const AUJOURDHUI = utcToIso(Date.now());
 
+// Dans un cadre bac à sable (aperçu d'artefact, intégration), le navigateur refuse
+// les téléchargements lancés par la page. On bascule alors sur le presse-papiers.
+const EN_CADRE = (() => { try { return window.self !== window.top; } catch { return true; } })();
+
 /* ------------------------------------------------------------------- modes */
 
 const MODES = {
@@ -1636,6 +1666,25 @@ function verifierMode() {
 
 /* ------------------------------------------------------------- événements */
 
+/** Remplace confirm(), refusé dans les cadres bac à sable. */
+function demander() {
+  return new Promise((resoudre) => {
+    const voile = $('#voile');
+    voile.hidden = false;
+    const fin = (reponse) => {
+      voile.hidden = true;
+      $('#dlg-oui').onclick = null;
+      $('#dlg-non').onclick = null;
+      voile.onclick = null;
+      resoudre(reponse);
+    };
+    $('#dlg-oui').onclick = () => fin(true);
+    $('#dlg-non').onclick = () => fin(false);
+    voile.onclick = (e) => { if (e.target === voile) fin(false); };
+    $('#dlg-oui').focus();
+  });
+}
+
 function toast(msg) {
   const t = $('#toast');
   t.textContent = msg;
@@ -1786,16 +1835,39 @@ function brancher() {
     recalculerBientot();
   });
 
-  // Export .ics
-  $('#btn-ics').addEventListener('click', () => {
+  // Export .ics — téléchargement si la page le permet, presse-papiers sinon.
+  // Un aperçu en cadre refuse les téléchargements : on met alors en avant la
+  // copie du récapitulatif, seule action vraiment utile depuis un téléphone.
+  if (EN_CADRE) {
+    $('#btn-ics').lastChild.textContent = ' Copier le calendrier (.ics) ';
+    $('#btn-ics').classList.remove('primaire');
+    $('#btn-copie').classList.add('primaire');
+    $('#btn-copie').parentNode.prepend($('#btn-copie'));
+    $('#aide-export').innerHTML = 'Cet aperçu ne peut pas télécharger de fichier. '
+      + 'Le récapitulatif se colle dans un message ou une demande de congés ; '
+      + 'le .ics se copie aussi, à enregistrer sur ordinateur sous <code>conges.ics</code> '
+      + 'puis à ouvrir avec ton agenda.';
+  }
+
+  $('#btn-ics').addEventListener('click', async () => {
     if (!resultat.pauses.length) return toast('Aucune pause à exporter');
-    const titre = `Congés ${etat.debut.slice(0, 4)}`;
-    const texte = versIcs(resultat.pauses, { titre, decompte: etat.decompte });
+    const annee = etat.debut.slice(0, 4);
+    const texte = versIcs(resultat.pauses, { titre: `Congés ${annee}`, decompte: etat.decompte });
+
+    if (EN_CADRE) {
+      try {
+        await navigator.clipboard.writeText(texte);
+        toast('Calendrier copié — colle-le dans un fichier .ics');
+      } catch {
+        toast('Copie refusée par le navigateur');
+      }
+      return;
+    }
     const blob = new Blob([texte], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `conges-${etat.debut.slice(0, 4)}.ics`;
+    a.download = `conges-${annee}.ics`;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -1827,8 +1899,8 @@ function brancher() {
   });
 
   // Réinitialisation
-  $('#btn-reset').addEventListener('click', () => {
-    if (!confirm('Remettre tous les réglages à zéro ?')) return;
+  $('#btn-reset').addEventListener('click', async () => {
+    if (!await demander()) return;
     etat = etatParDefaut(2027);
     syncReglages(); recalculer(); sauver(); changerVue('plan');
     toast('Réglages réinitialisés');

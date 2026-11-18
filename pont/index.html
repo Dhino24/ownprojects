@@ -52,6 +52,7 @@
         Ajouter à mon agenda (.ics)
       </button>
       <button class="btn" id="btn-copie">Copier le récapitulatif</button>
+      <p class="aide" id="aide-export" style="text-align:center;margin:2px 0 0"></p>
     </div>
 
     <details class="carte note" id="explication" style="margin-top:14px">
@@ -238,6 +239,17 @@
 </nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="voile" id="voile" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="dlg-titre">
+    <h3 id="dlg-titre">Tout réinitialiser&nbsp;?</h3>
+    <p>Le solde, les réglages et les jours contraints reviendront à leur valeur d'origine.</p>
+    <div class="dlg-actions">
+      <button class="btn" id="dlg-non">Annuler</button>
+      <button class="btn danger" id="dlg-oui" style="border-color:var(--interdit)">Réinitialiser</button>
+    </div>
+  </div>
+</div>
 
 <script type="module" src="src/app.js"></script>
 </body>
