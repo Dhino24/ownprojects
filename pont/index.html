@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pont — optimiseur de congés payés</title>
+<meta name="description" content="Place tes congés payés pour obtenir le plus de jours de repos possible : ponts, semaines et grandes vacances calculés à partir des jours fériés.">
+<meta name="theme-color" content="#0d1016">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pont">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <h1 class="brand">P<em>o</em>nt</h1>
+  <span class="periode-chip" id="chip-periode">2027</span>
+</header>
+
+<section class="hero" aria-live="polite">
+  <div class="gros">
+    <span class="nb" id="st-repos">—</span>
+    <span class="nb-lbl">jours de repos</span>
+  </div>
+  <div class="sous" id="st-sous"></div>
+  <div class="puces" id="st-puces"></div>
+</section>
+
+<main>
+
+  <!-- ------------------------------------------------------------- PLAN -->
+  <section class="vue actif" id="vue-plan" aria-labelledby="t-plan">
+    <h2 class="sr" id="t-plan">Plan de congés</h2>
+
+    <div id="alerte-contraintes"></div>
+
+    <div class="bloc-titre">Tes pauses</div>
+    <div id="liste-pauses"></div>
+
+    <div class="bloc-titre">Le millésime</div>
+    <div class="carte note" id="millesime"></div>
+
+    <div class="bloc-titre">Exporter</div>
+    <div class="actions">
+      <button class="btn primaire" id="btn-ics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="19" height="19" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Ajouter à mon agenda (.ics)
+      </button>
+      <button class="btn" id="btn-copie">Copier le récapitulatif</button>
+    </div>
+
+    <details class="carte note" id="explication" style="margin-top:14px">
+      <summary style="cursor:pointer;font-size:13.5px;font-weight:600;list-style:none">
+        Comment le calcul fonctionne
+      </summary>
+      <p style="margin-top:10px">Un jour de congé posé ne vaut pas un jour de repos : il
+        <b>soude</b> des week-ends et des jours fériés entre eux. Poser le vendredi 7 mai 2027,
+        au lendemain de l'Ascension, ne coûte <b>qu'un jour</b> et en rapporte <b>quatre</b>
+        d'affilée.</p>
+      <p>L'application teste donc toutes les façons de répartir ton solde sur la période et
+        retient celle qui maximise le total de jours de repos consécutifs obtenus. Le calcul est
+        exact — ce n'est pas une estimation : tous les placements possibles sont explorés par
+        programmation dynamique.</p>
+      <p>À score égal, c'est le plan le <b>plus étalé</b> sur l'année qui est retenu.</p>
+    </details>
+  </section>
+
+  <!-- -------------------------------------------------------- CALENDRIER -->
+  <section class="vue" id="vue-cal" aria-labelledby="t-cal">
+    <h2 class="sr" id="t-cal">Calendrier</h2>
+
+    <details class="astuce">
+      <summary><b>Appuie sur un jour</b> pour le contraindre</summary>
+      <div class="corps">
+        <p style="margin:0 0 8px">Un appui&nbsp;: <span style="color:var(--impose)">imposé</span>
+          — tu poseras ce congé quoi qu'il arrive (location réservée, mariage, fermeture).</p>
+        <p style="margin:0 0 8px">Deux appuis&nbsp;: <span style="color:var(--interdit)">interdit</span>
+          — jamais de congé ce jour-là (inventaire, période chargée, astreinte).</p>
+        <p style="margin:0">Trois appuis&nbsp;: retour à la normale. Le plan se recalcule
+          à chaque fois autour de tes contraintes.</p>
+      </div>
+    </details>
+
+    <div class="legende" aria-hidden="true">
+      <span><i class="pastille p-pose"></i>congé posé</span>
+      <span><i class="pastille p-bloc"></i>repos obtenu</span>
+      <span><i class="pastille p-ferie"></i>férié</span>
+      <span><i class="pastille p-we"></i>week-end</span>
+      <span><i class="pastille p-impose"></i>imposé</span>
+      <span><i class="pastille p-interdit"></i>interdit</span>
+    </div>
+
+    <div id="compteur-contraintes"></div>
+    <div class="grille-mois" id="calendrier"></div>
+  </section>
+
+  <!-- ---------------------------------------------------------- RÉGLAGES -->
+  <section class="vue" id="vue-set" aria-labelledby="t-set">
+    <h2 class="sr" id="t-set">Réglages</h2>
+
+    <div class="bloc-titre">Mon solde</div>
+    <div class="carte">
+      <div class="champ">
+        <span class="lbl" id="lbl-decompte">Mon employeur décompte mes congés en…</span>
+        <div class="segments" role="group" aria-labelledby="lbl-decompte">
+          <button data-decompte="ouvres"    aria-pressed="false">Jours ouvrés<br><small style="font-weight:400;opacity:.7">lun → ven</small></button>
+          <button data-decompte="ouvrables" aria-pressed="false">Jours ouvrables<br><small style="font-weight:400;opacity:.7">lun → sam</small></button>
+        </div>
+        <p class="aide" id="aide-decompte"></p>
+      </div>
+
+      <div class="champ">
+        <label for="in-solde">Congés payés disponibles</label>
+        <div class="stepper">
+          <button type="button" data-pas="-1" aria-label="Retirer un jour">−</button>
+          <input id="in-solde" type="number" inputmode="numeric" min="0" max="80" step="1">
+          <button type="button" data-pas="1" aria-label="Ajouter un jour">+</button>
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="in-bonus">Jours en plus (RTT, ancienneté, fractionnement…)</label>
+        <div class="stepper">
+          <button type="button" data-pas-bonus="-1" aria-label="Retirer un jour">−</button>
+          <input id="in-bonus" type="number" inputmode="numeric" min="0" max="40" step="1">
+          <button type="button" data-pas-bonus="1" aria-label="Ajouter un jour">+</button>
+        </div>
+        <p class="aide">Additionnés au solde. Utile si tes RTT se posent comme des congés.</p>
+      </div>
+    </div>
+
+    <div class="bloc-titre">Période</div>
+    <div class="carte">
+      <div class="champ">
+        <label for="in-annee">Année</label>
+        <div class="stepper">
+          <button type="button" data-pas-annee="-1" aria-label="Année précédente">−</button>
+          <input id="in-annee" type="number" inputmode="numeric" min="2000" max="2100" step="1">
+          <button type="button" data-pas-annee="1" aria-label="Année suivante">+</button>
+        </div>
+      </div>
+      <details class="avance">
+        <summary>Période de référence personnalisée</summary>
+        <div class="duo" style="margin-top:4px">
+          <div class="champ"><label for="in-debut">Du</label><input id="in-debut" type="date"></div>
+          <div class="champ"><label for="in-fin">Au</label><input id="in-fin" type="date"></div>
+        </div>
+        <p class="aide">Pour les entreprises dont l'année de congés ne suit pas l'année civile
+          (par exemple du 1<sup>er</sup> juin au 31 mai).</p>
+      </details>
+    </div>
+
+    <div class="bloc-titre">Ce que je cherche</div>
+    <div class="modes" id="modes"></div>
+
+    <div class="bloc-titre">Réglages fins</div>
+    <div class="carte">
+      <details class="avance" open>
+        <summary>Forme des pauses</summary>
+
+        <div class="champ" style="margin-top:8px">
+          <label for="in-minbloc">Pause la plus courte acceptée : <b id="v-minbloc"></b> jours de repos</label>
+          <input id="in-minbloc" type="range" min="1" max="16" step="1" style="width:100%">
+          <p class="aide">À 3, les simples ponts sont permis. À 9, seules les vraies semaines comptent.</p>
+        </div>
+
+        <div class="champ">
+          <label for="in-maxpauses">Nombre maximal de pauses (0 = illimité)</label>
+          <input id="in-maxpauses" type="number" inputmode="numeric" min="0" max="40" step="1">
+        </div>
+
+        <div class="champ">
+          <label class="bascule">
+            <input type="checkbox" id="in-etaler"><span class="piste"></span>
+            <span class="txt">Étaler sur l'année
+              <small>À score égal, répartir les pauses au lieu de les entasser</small></span>
+          </label>
+        </div>
+      </details>
+
+      <details class="avance">
+        <summary>Règles françaises</summary>
+        <div class="champ" style="margin-top:8px">
+          <label class="bascule">
+            <input type="checkbox" id="in-principal"><span class="piste"></span>
+            <span class="txt">Congé principal
+              <small id="aide-principal"></small></span>
+          </label>
+        </div>
+        <div class="duo">
+          <div class="champ"><label for="in-cp-debut">Fenêtre, du</label><input id="in-cp-debut" type="date"></div>
+          <div class="champ"><label for="in-cp-fin">au</label><input id="in-cp-fin" type="date"></div>
+        </div>
+        <div class="champ">
+          <label class="bascule">
+            <input type="checkbox" id="in-plafond"><span class="piste"></span>
+            <span class="txt">Plafond de congé continu
+              <small id="aide-plafond"></small></span>
+          </label>
+        </div>
+        <p class="aide">Ces deux règles reprennent le code du travail. Ton accord d'entreprise
+          peut prévoir autre chose : désactive-les si besoin.</p>
+      </details>
+
+      <details class="avance">
+        <summary>Mes jours travaillés</summary>
+        <div class="semaine" id="semaine" role="group" aria-label="Jours de la semaine travaillés" style="margin-top:8px"></div>
+        <p class="aide">Par défaut lundi → vendredi. Décoche si tu travailles le samedi, ou si tu
+          es à temps partiel sur des jours fixes.</p>
+      </details>
+    </div>
+
+    <div class="actions" style="margin-bottom:20px">
+      <button class="btn discret danger" id="btn-reset">Tout réinitialiser</button>
+    </div>
+  </section>
+
+</main>
+
+<nav class="onglets" role="tablist" aria-label="Sections">
+  <button data-vue="plan" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round"/></svg>
+    Plan
+  </button>
+  <button data-vue="cal">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+    Calendrier
+  </button>
+  <button data-vue="set">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M4 12h6M14 12h6" stroke-linecap="round"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/><circle cx="12" cy="12" r="2.2"/></svg>
+    Réglages
+  </button>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

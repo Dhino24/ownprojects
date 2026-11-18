@@ -1,0 +1,12 @@
+{
+  "name": "pont",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Optimiseur de congés payés : place vos CP pour maximiser le repos obtenu.",
+  "scripts": {
+    "test": "node --test tests/engine.test.mjs",
+    "build": "node build.mjs",
+    "serve": "node serve.mjs"
+  }
+}
