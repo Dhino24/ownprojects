@@ -1,0 +1,50 @@
+# Pont — site statique, sans dépendances : `node build.mjs` ne fait que rassembler
+# les fichiers dans dist/. Rien à installer, rien à compiler.
+#
+# Pour relier ce dossier à un site Netlify depuis le dépôt, régler la base sur
+# « pont » dans les réglages du site : ce fichier prend alors le relais.
+
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+
+# L'application n'a pas d'empreinte dans ses noms de fichiers : on révalide à
+# chaque fois plutôt que de risquer de servir une version périmée.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Referrer-Policy = "no-referrer"
+
+# nosniff est ciblé sur le code que l'on sert soi-même : appliqué à tout le site,
+# il fait échouer le script d'analyse que Netlify injecte sous /.netlify/, servi
+# en text/html, et pollue la console à chaque chargement.
+[[headers]]
+  for = "/src/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/styles.css"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Cache-Control = "no-cache"
+
+# Netlify ne connaît pas l'extension .webmanifest et le sert en octet-stream :
+# le navigateur le rejette alors et l'installation sur l'écran d'accueil ne
+# marche plus. On impose donc le type.
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"
+
+# Les icônes, elles, ne changent pas.
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

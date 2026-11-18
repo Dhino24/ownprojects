@@ -7,6 +7,8 @@ de travail.
 Aucune dépendance, aucun compte, aucun appel réseau : tout est calculé sur l'appareil et
 conservé en local.
 
+**En ligne : https://pont-conges.netlify.app**
+
 ## Le principe
 
 Un jour de congé posé ne vaut pas un jour de repos : il **soude** des week-ends et des jours
@@ -33,6 +35,22 @@ sur l'espacement minimal entre deux pauses.
 - **Règles françaises** optionnelles : congé principal (12 jours ouvrables entre mai et octobre)
   et plafond de congé continu (24 jours ouvrables).
 - **Export iCalendar** (.ics) et récapitulatif en texte pour une demande RH.
+
+## Déploiement
+
+Site statique, aucune étape de compilation : `netlify.toml` lance `node build.mjs`, qui
+rassemble les fichiers dans `dist/`, et publie ce dossier. Les en-têtes y règlent trois
+choses qui ne vont pas de soi :
+
+- le manifeste, que Netlify sert sinon en `application/octet-stream`, ce qui le fait rejeter
+  par le navigateur et empêche l'installation sur l'écran d'accueil ;
+- `nosniff` ciblé sur le code que l'on sert soi-même, et non sur tout le site, pour ne pas
+  casser le script que l'hébergeur injecte sous `/.netlify/` ;
+- la révalidation systématique, les noms de fichiers n'ayant pas d'empreinte de version.
+
+La navigation est en haut, pas en bas : sur les plans Netlify gratuits, un badge flottant
+occupe le coin inférieur droit en `z-index` maximal et rendrait inutilisables les onglets
+qui s'y trouveraient.
 
 ## Développement
 

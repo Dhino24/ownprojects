@@ -664,7 +664,7 @@ changerVue(etat.vue || 'plan');
 
 // Mise en cache hors-ligne, si l'hébergement le permet. Sans service worker,
 // l'application fonctionne de la même manière : tout le calcul est local.
-if ('serviceWorker' in navigator && location.protocol === 'https:') {
+if ('serviceWorker' in navigator && window.isSecureContext) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch(() => { /* sans conséquence */ });
   });

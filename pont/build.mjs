@@ -1,7 +1,9 @@
-// Assemble l'application en un seul fichier HTML autonome (dist/index.html),
-// pratique à héberger, à envoyer ou à ouvrir hors-ligne. Pas de bundler :
-// le graphe d'imports est résolu ici, les modules sont concaténés dans l'ordre.
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+// Prépare `dist/`, le dossier à mettre en ligne :
+//   - l'application telle quelle (PWA multi-fichiers, avec service worker et manifeste) ;
+//   - `standalone.html`, la même application en un seul fichier autonome, pratique à
+//     envoyer, à ouvrir hors-ligne ou à publier ailleurs.
+// Pas de bundler : le graphe d'imports est résolu ici et les modules concaténés.
+import { readFile, writeFile, mkdir, rm, cp } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -58,7 +60,17 @@ html = pose(html, '<link rel="stylesheet" href="styles.css">', `<style>\n${css}\
 html = pose(html, '<script type="module" src="src/app.js"></script>',
   `<script type="module">\n${js}\n</script>`);
 
-await mkdir(join(racine, 'dist'), { recursive: true });
-await writeFile(join(racine, 'dist/index.html'), html);
+const dist = join(racine, 'dist');
+await rm(dist, { recursive: true, force: true });
+await mkdir(dist, { recursive: true });
+
+// L'application elle-même, servie telle quelle.
+const aCopier = ['index.html', 'styles.css', 'sw.js', 'manifest.webmanifest', 'src', 'icons'];
+for (const f of aCopier) await cp(join(racine, f), join(dist, f), { recursive: true });
+
+// Et sa version en un seul fichier.
+await writeFile(join(dist, 'standalone.html'), html);
+
 const ko = (Buffer.byteLength(html) / 1024).toFixed(0);
-console.log(`dist/index.html — ${ko} Ko — modules : ${modules.join(' → ')}`);
+console.log(`dist/ — site prêt à mettre en ligne (${aCopier.join(', ')})`);
+console.log(`dist/standalone.html — ${ko} Ko — modules : ${modules.join(' → ')}`);

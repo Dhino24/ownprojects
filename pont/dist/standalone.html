@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pont — optimiseur de congés payés</title>
+<meta name="description" content="Place tes congés payés pour obtenir le plus de jours de repos possible : ponts, semaines et grandes vacances calculés à partir des jours fériés.">
+<meta name="theme-color" content="#0d1016">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pont">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="192x192" href="data:image/png;base64,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">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20role%3D%22img%22%20aria-label%3D%22Pont%22%3E%0A%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23101520%22%2F%3E%0A%20%20%3Cg%20fill%3D%22%2345d7a8%22%3E%0A%20%20%20%20%3Crect%20x%3D%227%22%20y%3D%2234%22%20width%3D%2286%22%20height%3D%227%22%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M9%2082a41%2041%200%200182%200h-8a33%2033%200%2000-66%200z%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2212%22%20y%3D%2286.5%22%20width%3D%2232%22%20height%3D%224%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2256%22%20y%3D%2286.5%22%20width%3D%2232%22%20height%3D%224%22%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E">
+<style>
+/* Pont — optimiseur de congés. Thème sombre, mobile d'abord, zéro dépendance. */
+
+:root {
+  --bg:        #0d1016;
+  --bg-2:      #151a22;
+  --bg-3:      #1e2530;
+  --bg-4:      #27303d;
+  --line:      #2c3644;
+  --line-fort: #3d4a5c;
+  --txt:       #e9eef6;
+  --txt-2:     #9dabbd;
+  --txt-3:     #6f7d90;
+
+  --repos:     #45d7a8;   /* congés posés / repos obtenu */
+  --repos-sur: #04231a;
+  --repos-pale:#1a3b32;
+  --ferie:     #f2b63c;
+  --ferie-sur: #2a1d02;
+  --impose:    #79a6ff;
+  --interdit:  #ff6b72;
+
+  --r:   14px;
+  --r-s: 10px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font: 400 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(96px + var(--safe-b));
+  overscroll-behavior-y: contain;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
+
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+
+/* ------------------------------------------------------------------ en-tête */
+
+.top {
+  position: sticky; top: 0; z-index: 20;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 8px;
+  background: var(--bg);
+}
+.top-ligne { display: flex; align-items: baseline; gap: 10px; padding: 0 4px 9px; }
+.brand { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+.brand em { font-style: normal; color: var(--repos); }
+.periode-chip {
+  margin-left: auto; font-size: 12px; color: var(--txt-2);
+  background: var(--bg-3); border: 1px solid var(--line);
+  padding: 3px 9px; border-radius: 99px; font-variant-numeric: tabular-nums;
+}
+
+/* Navigation en haut : le coin inférieur droit est occupé par le badge de
+   l'hébergeur sur certains plans, aucun contrôle permanent ne doit y vivre. */
+.onglets {
+  display: flex; gap: 4px;
+  background: var(--bg-3); border: 1px solid var(--line);
+  border-radius: var(--r-s); padding: 4px;
+}
+.onglets button {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 4px; border-radius: 7px;
+  font-size: 13px; font-weight: 600; color: var(--txt-2);
+}
+.onglets button svg { width: 17px; height: 17px; flex: 0 0 auto; }
+.onglets button[aria-current="page"] {
+  background: var(--bg-4); color: var(--repos); box-shadow: 0 1px 2px #0006;
+}
+
+/* --------------------------------------------------------------- bandeau clé */
+
+.hero {
+  margin: 0 12px 12px; padding: 15px 15px 13px;
+  background: linear-gradient(160deg, var(--bg-3), var(--bg-2));
+  border: 1px solid var(--line); border-radius: var(--r);
+}
+.hero .gros {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+}
+.hero .nb {
+  font-size: 38px; line-height: 1; font-weight: 700; letter-spacing: -0.03em;
+  color: var(--repos); font-variant-numeric: tabular-nums;
+}
+.hero .nb-lbl { font-size: 16px; font-weight: 600; }
+.hero .sous { margin-top: 5px; color: var(--txt-2); font-size: 13.5px; line-height: 1.4; }
+.hero .sous b { color: var(--txt); font-variant-numeric: tabular-nums; }
+
+.puces {
+  display: flex; gap: 7px; margin-top: 11px;
+  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+  margin-right: -15px; padding-right: 15px;
+}
+.puces::-webkit-scrollbar { display: none; }
+.puces { mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent); }
+.puce { white-space: nowrap; flex: 0 0 auto; }
+.puce {
+  font-size: 12.5px; color: var(--txt-2);
+  background: #0f141b80; border: 1px solid var(--line);
+  padding: 5px 10px; border-radius: 99px; font-variant-numeric: tabular-nums;
+}
+.puce b { color: var(--txt); font-weight: 600; }
+.puce.alerte { border-color: #6b4a1f; color: var(--ferie); }
+.puce.alerte b { color: var(--ferie); }
+
+body.calcul .hero { opacity: .55; transition: opacity .12s; }
+
+/* ------------------------------------------------------------------- écrans */
+
+main { padding: 0 12px; }
+.vue { display: none; }
+.vue.actif { display: block; animation: fondu .18s ease-out; }
+@keyframes fondu { from { opacity: 0; transform: translateY(4px); } }
+
+.bloc-titre {
+  display: flex; align-items: center; gap: 8px;
+  margin: 22px 4px 10px; font-size: 13px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--txt-3);
+}
+.bloc-titre::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+.carte {
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 14px 15px; margin-bottom: 10px;
+}
+.carte.note { background: #141a2480; border-color: var(--line); }
+.carte p { margin: 0 0 8px; font-size: 14px; color: var(--txt-2); }
+.carte p:last-child { margin-bottom: 0; }
+.carte p b, .carte p strong { color: var(--txt); font-weight: 600; }
+
+/* ------------------------------------------------------------- liste des pauses */
+
+.pause { padding: 0; overflow: hidden; }
+.pause > summary {
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 15px; list-style: none; cursor: pointer;
+}
+.pause > summary::-webkit-details-marker { display: none; }
+.pause-nb {
+  flex: 0 0 48px; height: 48px; border-radius: 12px;
+  display: grid; place-content: center; text-align: center;
+  background: var(--repos-pale); border: 1px solid #2f6b58;
+  font-variant-numeric: tabular-nums;
+}
+.pause-nb strong { display: block; font-size: 19px; line-height: 1; color: var(--repos); }
+.pause-nb span { font-size: 9.5px; text-transform: uppercase; letter-spacing: .05em; color: #6cae98; }
+.pause-txt { flex: 1; min-width: 0; }
+.pause-quand { font-size: 14.5px; font-weight: 600; }
+.pause-cout { font-size: 12.5px; color: var(--txt-2); margin-top: 2px; }
+.pause-chevron { color: var(--txt-3); flex: 0 0 auto; transition: transform .18s; }
+.pause[open] .pause-chevron { transform: rotate(90deg); }
+
+.etiq {
+  display: inline-block; font-size: 10.5px; font-weight: 600; padding: 2px 7px;
+  border-radius: 99px; text-transform: uppercase; letter-spacing: .04em;
+  border: 1px solid currentColor; margin-left: 6px; vertical-align: 1px;
+}
+.etiq.or     { color: #f2b63c; }
+.etiq.violet { color: #b89bff; }
+.etiq.bleu   { color: #79a6ff; }
+.etiq.vert   { color: #45d7a8; }
+
+.pause-detail {
+  padding: 2px 15px 15px; border-top: 1px solid var(--line);
+  margin-top: 0; font-size: 13.5px; color: var(--txt-2);
+}
+.pause-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 12px 0 0; }
+.pause-detail dt { color: var(--txt-3); }
+.pause-detail dd { margin: 0; color: var(--txt); }
+.pause-detail ul { margin: 6px 0 0; padding-left: 18px; }
+.pause-detail li { margin: 2px 0; }
+.pause-detail .ferie-nom { color: var(--ferie); }
+
+/* ------------------------------------------------------------------ calendrier */
+
+.legende {
+  display: flex; gap: 13px; margin: 0 0 13px; font-size: 12px; color: var(--txt-2);
+  overflow-x: auto; scrollbar-width: none; padding: 0 4px 2px;
+}
+.legende::-webkit-scrollbar { display: none; }
+.legende { mask-image: linear-gradient(90deg, #000 calc(100% - 22px), transparent); }
+.legende span { white-space: nowrap; flex: 0 0 auto; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.pastille { width: 13px; height: 13px; border-radius: 4px; flex: 0 0 auto; }
+.pastille.p-pose     { background: var(--repos); }
+.pastille.p-bloc     { background: var(--repos-pale); border: 1px solid #2f6b58; }
+.pastille.p-ferie    { background: var(--ferie); }
+.pastille.p-we       { background: var(--bg-4); }
+.pastille.p-impose   { background: transparent; box-shadow: inset 0 0 0 2px var(--impose); }
+.pastille.p-interdit { background: transparent; box-shadow: inset 0 0 0 2px var(--interdit); }
+
+.mois { margin-bottom: 18px; }
+.mois-nom {
+  font-size: 14px; font-weight: 650; margin: 0 2px 7px; text-transform: capitalize;
+}
+.mois-nom small { font-weight: 400; color: var(--txt-3); text-transform: none; margin-left: 6px; font-size: 12px; }
+.grille { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.jour-nom {
+  text-align: center; font-size: 10.5px; color: var(--txt-3);
+  padding-bottom: 3px; font-weight: 600;
+}
+.jour {
+  position: relative; aspect-ratio: 1 / 0.82; min-height: 36px;
+  display: grid; place-content: center;
+  border-radius: 8px; font-size: 13px; font-variant-numeric: tabular-nums;
+  color: var(--txt-2); background: transparent;
+  border: 1px solid transparent; padding: 0;
+}
+.jour.vide { visibility: hidden; }
+.jour.hors { opacity: .3; }
+.jour.we { background: var(--bg-3); }
+.jour.bloc { background: var(--repos-pale); color: #b7ead9; }
+.jour.ferie { color: var(--ferie); font-weight: 700; }
+.jour.ferie::after {
+  content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 3px; border-radius: 50%; background: var(--ferie);
+}
+.jour.pose {
+  background: var(--repos); color: var(--repos-sur); font-weight: 700;
+}
+.jour.pose.ferie { color: var(--repos-sur); }
+.jour.pose.ferie::after { background: var(--repos-sur); }
+.jour.impose  { box-shadow: inset 0 0 0 2px var(--impose); }
+.jour.interdit {
+  color: var(--interdit); background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--interdit);
+}
+.jour.interdit::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 46%, var(--interdit) 46%,
+              var(--interdit) 54%, transparent 54%); opacity: .55; border-radius: 7px;
+}
+.jour.cliquable { cursor: pointer; }
+.jour.cliquable:active { transform: scale(.9); }
+.jour.aujourdhui { border-color: var(--line-fort); }
+
+/* --------------------------------------------------------------- formulaires */
+
+.champ { margin-bottom: 15px; }
+.champ:last-child { margin-bottom: 0; }
+.champ > label, .champ > .lbl {
+  display: block; font-size: 13px; font-weight: 600; margin-bottom: 7px;
+}
+.aide { font-size: 12.5px; color: var(--txt-3); margin-top: 6px; line-height: 1.45; }
+.aide b { color: var(--txt-2); font-weight: 600; }
+
+input[type="number"], input[type="date"], select {
+  width: 100%; background: var(--bg-3); color: var(--txt);
+  border: 1px solid var(--line); border-radius: var(--r-s);
+  padding: 11px 12px; font: inherit; font-size: 15px;
+  appearance: none; -webkit-appearance: none;
+}
+input[type="date"] { min-height: 45px; }
+input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--repos); outline-offset: 2px;
+}
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.segments { display: flex; gap: 4px; background: var(--bg-3); padding: 4px; border-radius: var(--r-s); border: 1px solid var(--line); }
+.segments button {
+  flex: 1; padding: 9px 6px; border-radius: 7px; font-size: 13.5px; font-weight: 600;
+  color: var(--txt-2); text-align: center;
+}
+.segments button[aria-pressed="true"] { background: var(--bg-4); color: var(--txt); box-shadow: 0 1px 2px #0006; }
+
+.stepper { display: flex; align-items: stretch; gap: 8px; }
+.stepper button {
+  flex: 0 0 48px; background: var(--bg-3); border: 1px solid var(--line);
+  border-radius: var(--r-s); font-size: 22px; font-weight: 400; color: var(--txt);
+  display: grid; place-content: center;
+}
+.stepper button:active { background: var(--bg-4); }
+.stepper input { text-align: center; font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.modes { display: grid; gap: 8px; }
+.mode {
+  display: block; text-align: left; width: 100%;
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: var(--r-s); padding: 12px 14px;
+}
+.mode[aria-pressed="true"] { border-color: var(--repos); background: #14251f; }
+.mode strong { display: block; font-size: 14.5px; margin-bottom: 3px; }
+.mode[aria-pressed="true"] strong { color: var(--repos); }
+.mode span { font-size: 12.5px; color: var(--txt-2); line-height: 1.4; }
+
+.semaine { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.semaine button {
+  padding: 10px 0; border-radius: 8px; background: var(--bg-3);
+  border: 1px solid var(--line); font-size: 13px; font-weight: 600; color: var(--txt-3);
+}
+.semaine button[aria-pressed="true"] { background: var(--bg-4); color: var(--txt); border-color: var(--line-fort); }
+
+.bascule { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.bascule input { position: absolute; opacity: 0; width: 0; height: 0; }
+.bascule .piste {
+  flex: 0 0 44px; height: 26px; border-radius: 99px; background: var(--bg-4);
+  border: 1px solid var(--line); position: relative; transition: background .15s;
+}
+.bascule .piste::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px;
+  border-radius: 50%; background: var(--txt-2); transition: transform .15s, background .15s;
+}
+.bascule input:checked + .piste { background: var(--repos-pale); border-color: #2f6b58; }
+.bascule input:checked + .piste::after { transform: translateX(18px); background: var(--repos); }
+.bascule .txt { font-size: 14px; font-weight: 500; }
+.bascule .txt small { display: block; font-size: 12px; color: var(--txt-3); font-weight: 400; }
+.bascule input:focus-visible + .piste { outline: 2px solid var(--repos); outline-offset: 2px; }
+
+details.avance > summary {
+  list-style: none; cursor: pointer; font-size: 13px; font-weight: 600;
+  color: var(--txt-2); padding: 12px 2px; display: flex; align-items: center; gap: 7px;
+}
+details.avance > summary::-webkit-details-marker { display: none; }
+details.avance > summary::before { content: '▸'; transition: transform .15s; display: inline-block; }
+details.avance[open] > summary::before { transform: rotate(90deg); }
+
+/* ------------------------------------------------------------------ boutons */
+
+.actions { display: grid; gap: 9px; margin-top: 14px; }
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 16px; border-radius: var(--r-s); font-size: 15px; font-weight: 600;
+  background: var(--bg-3); border: 1px solid var(--line); text-decoration: none; color: var(--txt);
+}
+.btn:active { transform: scale(.985); }
+.btn.primaire { background: var(--repos); color: var(--repos-sur); border-color: var(--repos); }
+.btn.discret { background: transparent; color: var(--txt-2); font-weight: 500; font-size: 14px; }
+.btn.danger { color: var(--interdit); }
+
+/* ------------------------------------------------------------------- divers */
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(84px + var(--safe-b)); transform: translate(-50%, 14px);
+  background: var(--bg-4); border: 1px solid var(--line-fort); color: var(--txt);
+  padding: 11px 17px; border-radius: 99px; font-size: 14px; z-index: 50;
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+  max-width: calc(100vw - 32px); text-align: center;
+}
+.toast.vu { opacity: 1; transform: translate(-50%, 0); }
+
+.vide-msg { text-align: center; padding: 34px 20px; color: var(--txt-3); font-size: 14px; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (min-width: 620px) {
+  body { max-width: 680px; margin: 0 auto; }
+  .grille-mois { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  .hero .nb { font-size: 46px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* Aide compacte, repliable, en tête du calendrier */
+details.astuce { margin-bottom: 12px; }
+details.astuce > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--txt-2); padding: 10px 13px;
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-s);
+}
+details.astuce > summary::-webkit-details-marker { display: none; }
+details.astuce > summary b { color: var(--txt); font-weight: 600; }
+details.astuce > summary::after { content: '?'; margin-left: auto; color: var(--txt-3); font-weight: 700; }
+details.astuce[open] > summary::after { content: '×'; font-size: 17px; }
+details.astuce .corps { padding: 11px 13px 0; font-size: 13px; color: var(--txt-2); line-height: 1.5; }
+
+/* Curseur de réglage */
+input[type="range"] { accent-color: var(--repos); height: 28px; }
+
+/* Boîte de dialogue : les cadres bac à sable refusent confirm() */
+.voile {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center;
+  background: #05070ad9; backdrop-filter: blur(3px); padding: 24px;
+}
+.voile[hidden] { display: none; }
+.dialogue {
+  background: var(--bg-2); border: 1px solid var(--line-fort); border-radius: var(--r);
+  padding: 20px 20px 16px; max-width: 360px; width: 100%;
+}
+.dialogue h3 { font-size: 17px; margin-bottom: 8px; }
+.dialogue p { margin: 0 0 18px; font-size: 14px; color: var(--txt-2); line-height: 1.5; }
+.dlg-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-ligne">
+    <h1 class="brand">P<em>o</em>nt</h1>
+    <span class="periode-chip" id="chip-periode">2027</span>
+  </div>
+  <nav class="onglets" role="tablist" aria-label="Sections">
+    <button data-vue="plan" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round"/></svg>
+      Plan
+    </button>
+    <button data-vue="cal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+      Calendrier
+    </button>
+    <button data-vue="set">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M4 12h6M14 12h6" stroke-linecap="round"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/><circle cx="12" cy="12" r="2.2"/></svg>
+      Réglages
+    </button>
+  </nav>
+</header>
+
+<section class="hero" aria-live="polite">
+  <div class="gros">
+    <span class="nb" id="st-repos">—</span>
+    <span class="nb-lbl">jours de repos</span>
+  </div>
+  <div class="sous" id="st-sous"></div>
+  <div class="puces" id="st-puces"></div>
+</section>
+
+<main>
+
+  <!-- ------------------------------------------------------------- PLAN -->
+  <section class="vue actif" id="vue-plan" aria-labelledby="t-plan">
+    <h2 class="sr" id="t-plan">Plan de congés</h2>
+
+    <div id="alerte-contraintes"></div>
+
+    <div class="bloc-titre">Tes pauses</div>
+    <div id="liste-pauses"></div>
+
+    <div class="bloc-titre">Le millésime</div>
+    <div class="carte note" id="millesime"></div>
+
+    <div class="bloc-titre">Exporter</div>
+    <div class="actions">
+      <button class="btn primaire" id="btn-ics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="19" height="19" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Ajouter à mon agenda (.ics)
+      </button>
+      <button class="btn" id="btn-copie">Copier le récapitulatif</button>
+      <p class="aide" id="aide-export" style="text-align:center;margin:2px 0 0"></p>
+    </div>
+
+    <details class="carte note" id="explication" style="margin-top:14px">
+      <summary style="cursor:pointer;font-size:13.5px;font-weight:600;list-style:none">
+        Comment le calcul fonctionne
+      </summary>
+      <p style="margin-top:10px">Un jour de congé posé ne vaut pas un jour de repos : il
+        <b>soude</b> des week-ends et des jours fériés entre eux. Poser le vendredi 7 mai 2027,
+        au lendemain de l'Ascension, ne coûte <b>qu'un jour</b> et en rapporte <b>quatre</b>
+        d'affilée.</p>
+      <p>L'application teste donc toutes les façons de répartir ton solde sur la période et
+        retient celle qui maximise le total de jours de repos consécutifs obtenus. Le calcul est
+        exact — ce n'est pas une estimation : tous les placements possibles sont explorés par
+        programmation dynamique.</p>
+      <p>À score égal, c'est le plan le <b>plus étalé</b> sur l'année qui est retenu.</p>
+    </details>
+  </section>
+
+  <!-- -------------------------------------------------------- CALENDRIER -->
+  <section class="vue" id="vue-cal" aria-labelledby="t-cal">
+    <h2 class="sr" id="t-cal">Calendrier</h2>
+
+    <details class="astuce">
+      <summary><b>Appuie sur un jour</b> pour le contraindre</summary>
+      <div class="corps">
+        <p style="margin:0 0 8px">Un appui&nbsp;: <span style="color:var(--impose)">imposé</span>
+          — tu poseras ce congé quoi qu'il arrive (location réservée, mariage, fermeture).</p>
+        <p style="margin:0 0 8px">Deux appuis&nbsp;: <span style="color:var(--interdit)">interdit</span>
+          — jamais de congé ce jour-là (inventaire, période chargée, astreinte).</p>
+        <p style="margin:0">Trois appuis&nbsp;: retour à la normale. Le plan se recalcule
+          à chaque fois autour de tes contraintes.</p>
+      </div>
+    </details>
+
+    <div class="legende" aria-hidden="true">
+      <span><i class="pastille p-pose"></i>congé posé</span>
+      <span><i class="pastille p-bloc"></i>repos obtenu</span>
+      <span><i class="pastille p-ferie"></i>férié</span>
+      <span><i class="pastille p-we"></i>week-end</span>
+      <span><i class="pastille p-impose"></i>imposé</span>
+      <span><i class="pastille p-interdit"></i>interdit</span>
+    </div>
+
+    <div id="compteur-contraintes"></div>
+    <div class="grille-mois" id="calendrier"></div>
+  </section>
+
+  <!-- ---------------------------------------------------------- RÉGLAGES -->
+  <section class="vue" id="vue-set" aria-labelledby="t-set">
+    <h2 class="sr" id="t-set">Réglages</h2>
+
+    <div class="bloc-titre">Mon solde</div>
+    <div class="carte">
+      <div class="champ">
+        <span class="lbl" id="lbl-decompte">Mon employeur décompte mes congés en…</span>
+        <div class="segments" role="group" aria-labelledby="lbl-decompte">
+          <button data-decompte="ouvres"    aria-pressed="false">Jours ouvrés<br><small style="font-weight:400;opacity:.7">lun → ven</small></button>
+          <button data-decompte="ouvrables" aria-pressed="false">Jours ouvrables<br><small style="font-weight:400;opacity:.7">lun → sam</small></button>
+        </div>
+        <p class="aide" id="aide-decompte"></p>
+      </div>
+
+      <div class="champ">
+        <label for="in-solde">Congés payés disponibles</label>
+        <div class="stepper">
+          <button type="button" data-pas="-1" aria-label="Retirer un jour">−</button>
+          <input id="in-solde" type="number" inputmode="numeric" min="0" max="80" step="1">
+          <button type="button" data-pas="1" aria-label="Ajouter un jour">+</button>
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="in-bonus">Jours en plus (RTT, ancienneté, fractionnement…)</label>
+        <div class="stepper">
+          <button type="button" data-pas-bonus="-1" aria-label="Retirer un jour">−</button>
+          <input id="in-bonus" type="number" inputmode="numeric" min="0" max="40" step="1">
+          <button type="button" data-pas-bonus="1" aria-label="Ajouter un jour">+</button>
+        </div>
+        <p class="aide">Additionnés au solde. Utile si tes RTT se posent comme des congés.</p>
+      </div>
+    </div>
+
+    <div class="bloc-titre">Période</div>
+    <div class="carte">
+      <div class="champ">
+        <label for="in-annee">Année</label>
+        <div class="stepper">
+          <button type="button" data-pas-annee="-1" aria-label="Année précédente">−</button>
+          <input id="in-annee" type="number" inputmode="numeric" min="2000" max="2100" step="1">
+          <button type="button" data-pas-annee="1" aria-label="Année suivante">+</button>
+        </div>
+      </div>
+      <details class="avance">
+        <summary>Période de référence personnalisée</summary>
+        <div class="duo" style="margin-top:4px">
+          <div class="champ"><label for="in-debut">Du</label><input id="in-debut" type="date"></div>
+          <div class="champ"><label for="in-fin">Au</label><input id="in-fin" type="date"></div>
+        </div>
+        <p class="aide">Pour les entreprises dont l'année de congés ne suit pas l'année civile
+          (par exemple du 1<sup>er</sup> juin au 31 mai).</p>
+      </details>
+    </div>
+
+    <div class="bloc-titre">Ce que je cherche</div>
+    <div class="modes" id="modes"></div>
+
+    <div class="bloc-titre">Réglages fins</div>
+    <div class="carte">
+      <details class="avance" open>
+        <summary>Forme des pauses</summary>
+
+        <div class="champ" style="margin-top:8px">
+          <label for="in-minbloc">Pause la plus courte acceptée : <b id="v-minbloc"></b> jours de repos</label>
+          <input id="in-minbloc" type="range" min="1" max="16" step="1" style="width:100%">
+          <p class="aide">À 3, les simples ponts sont permis. À 9, seules les vraies semaines comptent.</p>
+        </div>
+
+        <div class="champ">
+          <label for="in-maxpauses">Nombre maximal de pauses (0 = illimité)</label>
+          <input id="in-maxpauses" type="number" inputmode="numeric" min="0" max="40" step="1">
+        </div>
+
+        <div class="champ">
+          <label class="bascule">
+            <input type="checkbox" id="in-etaler"><span class="piste"></span>
+            <span class="txt">Étaler sur l'année
+              <small>À score égal, répartir les pauses au lieu de les entasser</small></span>
+          </label>
+        </div>
+      </details>
+
+      <details class="avance">
+        <summary>Règles françaises</summary>
+        <div class="champ" style="margin-top:8px">
+          <label class="bascule">
+            <input type="checkbox" id="in-principal"><span class="piste"></span>
+            <span class="txt">Congé principal
+              <small id="aide-principal"></small></span>
+          </label>
+        </div>
+        <div class="duo">
+          <div class="champ"><label for="in-cp-debut">Fenêtre, du</label><input id="in-cp-debut" type="date"></div>
+          <div class="champ"><label for="in-cp-fin">au</label><input id="in-cp-fin" type="date"></div>
+        </div>
+        <div class="champ">
+          <label class="bascule">
+            <input type="checkbox" id="in-plafond"><span class="piste"></span>
+            <span class="txt">Plafond de congé continu
+              <small id="aide-plafond"></small></span>
+          </label>
+        </div>
+        <p class="aide">Ces deux règles reprennent le code du travail. Ton accord d'entreprise
+          peut prévoir autre chose : désactive-les si besoin.</p>
+      </details>
+
+      <details class="avance">
+        <summary>Mes jours travaillés</summary>
+        <div class="semaine" id="semaine" role="group" aria-label="Jours de la semaine travaillés" style="margin-top:8px"></div>
+        <p class="aide">Par défaut lundi → vendredi. Décoche si tu travailles le samedi, ou si tu
+          es à temps partiel sur des jours fixes.</p>
+      </details>
+    </div>
+
+    <div class="actions" style="margin-bottom:20px">
+      <button class="btn discret danger" id="btn-reset">Tout réinitialiser</button>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="voile" id="voile" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="dlg-titre">
+    <h3 id="dlg-titre">Tout réinitialiser&nbsp;?</h3>
+    <p>Le solde, les réglages et les jours contraints reviendront à leur valeur d'origine.</p>
+    <div class="dlg-actions">
+      <button class="btn" id="dlg-non">Annuler</button>
+      <button class="btn danger" id="dlg-oui" style="border-color:var(--interdit)">Réinitialiser</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+
+/* ===== src/dates.js ===== */
+// Utilitaires de dates en UTC pur : aucune dépendance au fuseau de l'appareil.
+
+const MS_DAY = 86400000;
+
+function ymdToUTC(y, m, d) {
+  return Date.UTC(y, m - 1, d);
+}
+
+function isoToUTC(iso) {
+  const y = +iso.slice(0, 4), m = +iso.slice(5, 7), d = +iso.slice(8, 10);
+  return ymdToUTC(y, m, d);
+}
+
+function utcToIso(ts) {
+  const dt = new Date(ts);
+  const y = dt.getUTCFullYear();
+  const m = String(dt.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(dt.getUTCDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+/** Décale une date ISO de n jours. */
+function isoAdd(iso, n) {
+  return utcToIso(isoToUTC(iso) + n * MS_DAY);
+}
+
+/** Jour de la semaine : 0 = dimanche … 6 = samedi. */
+function isoDow(iso) {
+  return new Date(isoToUTC(iso)).getUTCDay();
+}
+
+/** Nombre de jours entre deux dates ISO (b - a). */
+function isoDiff(a, b) {
+  return Math.round((isoToUTC(b) - isoToUTC(a)) / MS_DAY);
+}
+
+function isoYear(iso) { return +iso.slice(0, 4); }
+function isoMonth(iso) { return +iso.slice(5, 7); }
+function isoDay(iso) { return +iso.slice(8, 10); }
+
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+  'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const MOIS_COURT = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin',
+  'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+const JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+const JOURS_COURT = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+
+const moisNom = (m) => MOIS[m - 1];
+const moisCourt = (m) => MOIS_COURT[m - 1];
+const jourNom = (dow) => JOURS[dow];
+const jourLettre = (dow) => JOURS_COURT[dow];
+
+/** 1 -> « 1er », les autres inchangés. */
+const numeroJour = (n) => (n === 1 ? '1er' : String(n));
+
+/** « mardi 29 mars 2027 » */
+function formatLong(iso) {
+  return `${jourNom(isoDow(iso))} ${numeroJour(isoDay(iso))} ${moisNom(isoMonth(iso))} ${isoYear(iso)}`;
+}
+
+/** « du 27 mars au 5 avril 2027 », en évitant les répétitions inutiles. */
+function formatPlage(a, b) {
+  const ya = isoYear(a), yb = isoYear(b), ma = isoMonth(a), mb = isoMonth(b);
+  const da = numeroJour(isoDay(a)), db = numeroJour(isoDay(b));
+  if (a === b) return `le ${da} ${moisNom(ma)} ${ya}`;
+  if (ya === yb && ma === mb) return `du ${da} au ${db} ${moisNom(mb)} ${yb}`;
+  if (ya === yb) return `du ${da} ${moisNom(ma)} au ${db} ${moisNom(mb)} ${yb}`;
+  return `du ${da} ${moisNom(ma)} ${ya} au ${db} ${moisNom(mb)} ${yb}`;
+}
+
+/* ===== src/holidays.js ===== */
+// Jours fériés légaux français (métropole), calculés — valables pour toute année.
+
+
+/**
+ * Dimanche de Pâques (algorithme grégorien anonyme / Meeus-Jones-Butcher).
+ * @returns {string} date ISO
+ */
+function paques(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const mois = Math.floor((h + l - 7 * m + 114) / 31);
+  const jour = ((h + l - 7 * m + 114) % 31) + 1;
+  return utcToIso(ymdToUTC(year, mois, jour));
+}
+
+/**
+ * Les 11 jours fériés légaux de France métropolitaine.
+ * @returns {Array<{iso: string, nom: string}>}
+ */
+function feriesFrance(year) {
+  const p = paques(year);
+  const f = [
+    { iso: `${year}-01-01`, nom: "Jour de l'an" },
+    { iso: isoAdd(p, 1), nom: 'Lundi de Pâques' },
+    { iso: `${year}-05-01`, nom: 'Fête du Travail' },
+    { iso: `${year}-05-08`, nom: 'Victoire 1945' },
+    { iso: isoAdd(p, 39), nom: 'Ascension' },
+    { iso: isoAdd(p, 50), nom: 'Lundi de Pentecôte' },
+    { iso: `${year}-07-14`, nom: 'Fête nationale' },
+    { iso: `${year}-08-15`, nom: 'Assomption' },
+    { iso: `${year}-11-01`, nom: 'Toussaint' },
+    { iso: `${year}-11-11`, nom: 'Armistice 1918' },
+    { iso: `${year}-12-25`, nom: 'Noël' },
+  ];
+  f.sort((x, y) => (x.iso < y.iso ? -1 : 1));
+  return f;
+}
+
+/** Map iso -> nom du férié, pour une plage d'années inclusive. */
+function feriesMap(fromYear, toYear) {
+  const map = new Map();
+  for (let y = fromYear; y <= toYear; y++) {
+    for (const { iso, nom } of feriesFrance(y)) map.set(iso, nom);
+  }
+  return map;
+}
+
+/* ===== src/engine.js ===== */
+// Moteur d'optimisation des congés payés.
+//
+// Idée : l'année est une suite de jours « travaillés » et de jours « déjà au repos »
+// (week-ends + fériés). Poser un congé ne crée pas 1 jour de repos mais fusionne des
+// blocs : c'est la longueur du bloc de repos obtenu qui compte, pas le nombre de jours
+// posés. On cherche donc l'ensemble de congés qui maximise le total de jours de repos
+// consécutifs obtenus, sous contrainte du solde disponible.
+//
+// Résolution exacte par programmation dynamique sur la suite des jours travaillés
+// (pas d'heuristique gloutonne) : dp[i][u][k][f] = meilleur gain à partir du i-ème
+// jour travaillé, ayant déjà consommé u jours de solde, posé k pauses, et f indiquant
+// si l'obligation de congé principal est déjà satisfaite.
+
+
+
+const NEG = -1 << 29;
+
+/** Semaine de travail par défaut : lundi → vendredi. Index 0 = dimanche. */
+const SEMAINE_STANDARD = [false, true, true, true, true, true, false];
+
+/**
+ * Construit la fenêtre de calcul : la période de référence, élargie d'une marge de
+ * part et d'autre pour que les blocs de repos à cheval sur les bords soient mesurés
+ * correctement (un congé fin décembre s'étend sur le 1er janvier suivant).
+ */
+function buildCalendar({ debut, fin, semaine = SEMAINE_STANDARD, feries, marge = 40 }) {
+  const start = isoAdd(debut, -marge);
+  const end = isoAdd(fin, marge);
+  const days = [];
+  const index = new Map();
+  const n = isoDiff(start, end) + 1;
+  for (let k = 0; k < n; k++) {
+    const iso = isoAdd(start, k);
+    const dow = isoDow(iso);
+    const ferie = feries.get(iso) || null;
+    const travaille = semaine[dow] && !ferie;
+    index.set(iso, k);
+    days.push({
+      iso, dow, ferie, travaille,
+      weekend: !semaine[dow],
+      dansPeriode: iso >= debut && iso <= fin,
+    });
+  }
+  return { days, index, start, end, debut, fin };
+}
+
+/**
+ * Index des jours travaillés, et sommes préfixes du décompte en jours ouvrables
+ * (tous les jours sauf dimanche et fériés — définition légale française).
+ */
+function prepare(cal) {
+  const { days } = cal;
+  const W = [];
+  for (let k = 0; k < days.length; k++) if (days[k].travaille) W.push(k);
+  const ouvrablePrefix = new Int32Array(days.length + 1);
+  for (let k = 0; k < days.length; k++) {
+    const estOuvrable = days[k].dow !== 0 && !days[k].ferie;
+    ouvrablePrefix[k + 1] = ouvrablePrefix[k] + (estOuvrable ? 1 : 0);
+  }
+  return { W, ouvrablePrefix };
+}
+
+/**
+ * Fonction de coût d'une pause (i..j) exprimée en index de jours travaillés.
+ *  - 'ouvres'    : on décompte les jours réellement travaillés posés.
+ *  - 'ouvrables' : le décompte court du 1er jour d'absence au dernier jour ouvrable
+ *                  précédant la reprise. Poser un vendredi coûte donc 2 jours
+ *                  (vendredi + samedi) ; poser un lundi n'en coûte qu'un.
+ */
+function coutFn(prep, decompte) {
+  const { W, ouvrablePrefix } = prep;
+  if (decompte === 'ouvrables') {
+    return (i, j) => ouvrablePrefix[W[j + 1]] - ouvrablePrefix[W[i]];
+  }
+  return (i, j) => j - i + 1;
+}
+
+/**
+ * @typedef {Object} Options
+ * @property {number} solde            Jours de congés disponibles (dans l'unité de decompte).
+ * @property {'ouvres'|'ouvrables'} decompte  Jours ouvrés (lun-ven) ou ouvrables (lun-sam).
+ * @property {number} [minBloc]        Longueur minimale, en jours de repos, d'une pause retenue.
+ * @property {number} [maxPauses]      Nombre maximal de pauses.
+ * @property {number} [maxParPause]    Plafond de jours décomptés sur une seule pause.
+ * @property {Object} [congePrincipal] {min, debut, fin} — pause obligatoire sur la période.
+ * @property {Set<string>} [imposes]   Jours que l'on doit poser (ISO).
+ * @property {Set<string>} [interdits] Jours que l'on ne peut pas poser (ISO).
+ */
+
+/** Liste, pour chaque jour travaillé i, les pauses candidates (i..j) valides. */
+function candidats(cal, prep, opt) {
+  const { days } = cal;
+  const { W } = prep;
+  const M = W.length;
+  const minBloc = opt.minBloc ?? 1;
+  const maxParPause = opt.maxParPause ?? Infinity;
+  const interdits = opt.interdits ?? new Set();
+  const cp = opt.congePrincipal;
+
+  const poseable = new Uint8Array(M);
+  for (let i = 0; i < M; i++) {
+    const d = days[W[i]];
+    poseable[i] = d.dansPeriode && !interdits.has(d.iso) ? 1 : 0;
+  }
+
+  const coutDe = coutFn(prep, opt.decompte);
+
+  const parDepart = [];
+  for (let i = 0; i < M; i++) {
+    const liste = [];
+    if (poseable[i] && i >= 1) {
+      for (let j = i; j < M - 1; j++) {
+        if (!poseable[j]) break;
+        const cout = coutDe(i, j);
+        if (cout > maxParPause || cout > opt.solde) break;
+        const gain = W[j + 1] - W[i - 1] - 1;
+        if (gain >= minBloc) {
+          let principal = 0;
+          if (cp && cout >= cp.min
+            && days[W[i]].iso >= cp.debut && days[W[j]].iso <= cp.fin) principal = 1;
+          liste.push({ j, cout, gain, principal });
+        }
+      }
+    }
+    parDepart.push(liste);
+  }
+  return { parDepart, poseable };
+}
+
+/**
+ * Optimise le placement des congés.
+ * @returns {{faisable: boolean, pauses: Array, totalRepos: number, soldeUtilise: number, raison?: string}}
+ */
+function optimiser(cal, opt) {
+  const prep = prepare(cal);
+  const { W } = prep;
+  const M = W.length;
+  const { days } = cal;
+  const B = Math.max(0, Math.floor(opt.solde));
+  const imposes = opt.imposes ?? new Set();
+
+  const forced = new Uint8Array(M);
+  for (let i = 0; i < M; i++) if (imposes.has(days[W[i]].iso)) forced[i] = 1;
+  // Sommes préfixes pour tester d'un coup qu'un intervalle ne contient aucun jour imposé.
+  const forcedPrefix = new Int32Array(M + 1);
+  for (let i = 0; i < M; i++) forcedPrefix[i + 1] = forcedPrefix[i] + forced[i];
+  const aucunImpose = (a, b) => forcedPrefix[Math.min(b, M)] - forcedPrefix[Math.min(a, M)] === 0;
+
+  // Nombre minimal de jours travaillés entre deux pauses. 1 = deux pauses peuvent
+  // être séparées par une seule journée de travail (au-dessous, elles fusionneraient).
+  const ecart = Math.max(1, Math.floor(opt.espacementMin ?? 1));
+
+  const { parDepart } = candidats(cal, prep, opt);
+  const K = Math.max(1, Math.min(opt.maxPauses ?? B, B));
+  const S = opt.congePrincipal ? 2 : 1;
+  const needPrincipal = S === 2;
+
+  const dimU = B + 1, dimK = K + 1, dimS = S;
+  const horizon = M + 1 + ecart;
+  const size = (horizon + 1) * dimU * dimK * dimS;
+  const dp = new Int32Array(size).fill(NEG);
+  const choix = new Int16Array(size).fill(-2);
+  const at = (i, u, k, f) => ((i * dimU + u) * dimK + k) * dimS + f;
+
+  // Bords : plus aucun jour travaillé à traiter.
+  for (let i = M; i <= horizon; i++) {
+    for (let u = 0; u <= B; u++) for (let k = 0; k <= K; k++) for (let f = 0; f < S; f++) {
+      dp[at(i, u, k, f)] = (needPrincipal && f === 0) ? NEG : 0;
+      choix[at(i, u, k, f)] = -1;
+    }
+  }
+
+  for (let i = M - 1; i >= 0; i--) {
+    const liste = parDepart[i];
+    for (let u = 0; u <= B; u++) {
+      for (let k = 0; k <= K; k++) {
+        for (let f = 0; f < S; f++) {
+          let best = NEG, bestJ = -2;
+          if (k < K) {
+            for (let c = 0; c < liste.length; c++) {
+              const { j, cout, gain, principal } = liste[c];
+              if (u + cout > B) break;              // coûts croissants en j
+              // Les jours travaillés qui séparent cette pause de la suivante ne
+              // peuvent pas être des jours imposés : on les travaille.
+              if (!aucunImpose(j + 1, j + 1 + ecart)) continue;
+              const nf = S === 2 ? (f | principal) : 0;
+              const suite = dp[at(Math.min(j + 1 + ecart, horizon), u + cout, k + 1, nf)];
+              if (suite <= NEG) continue;
+              const v = gain + suite;
+              if (v > best) { best = v; bestJ = j; }
+            }
+          }
+          if (!forced[i]) {
+            const v = dp[at(i + 1, u, k, f)];
+            if (v > best) { best = v; bestJ = -1; }
+          }
+          dp[at(i, u, k, f)] = best;
+          choix[at(i, u, k, f)] = bestJ;
+        }
+      }
+    }
+  }
+
+  if (dp[at(0, 0, 0, 0)] <= NEG) {
+    return { faisable: false, pauses: [], totalRepos: 0, soldeUtilise: 0, raison: 'contraintes' };
+  }
+
+  // Reconstruction du chemin optimal.
+  const pauses = [];
+  let i = 0, u = 0, k = 0, f = 0;
+  while (i < M) {
+    const j = choix[at(i, u, k, f)];
+    if (j === -1) { i += 1; continue; }
+    const cand = parDepart[i].find((c) => c.j === j);
+    const { cout, gain, principal } = cand;
+    pauses.push({
+      debutPose: days[W[i]].iso,
+      finPose: days[W[j]].iso,
+      debutRepos: days[W[i - 1] + 1].iso,
+      finRepos: days[W[j + 1] - 1].iso,
+      jours: [],      // rempli ci-dessous
+      cout, gain, principal: !!principal,
+    });
+    u += cout; k += 1; f = S === 2 ? (f | principal) : 0;
+    i = j + 1 + ecart;
+  }
+
+  for (const p of pauses) {
+    const a = cal.index.get(p.debutPose), b = cal.index.get(p.finPose);
+    for (let t = a; t <= b; t++) if (days[t].travaille) p.jours.push(days[t].iso);
+  }
+
+  return {
+    faisable: true,
+    pauses,
+    totalRepos: pauses.reduce((s, p) => s + p.gain, 0),
+    soldeUtilise: pauses.reduce((s, p) => s + p.cout, 0),
+  };
+}
+
+/**
+ * Analyse un ensemble quelconque de jours posés : regroupe les jours travaillés
+ * consécutifs en pauses, et calcule pour chacune son coût et le repos obtenu.
+ * Sert à chiffrer un plan saisi à la main et à recouper un plan optimisé.
+ */
+function analyser(cal, joursPoses, decompte) {
+  const prep = prepare(cal);
+  const { W } = prep;
+  const cout = coutFn(prep, decompte);
+  const { days } = cal;
+  const poses = new Set(joursPoses);
+
+  const indexParIso = new Map();
+  for (let i = 0; i < W.length; i++) indexParIso.set(days[W[i]].iso, i);
+
+  const choisis = [...poses]
+    .map((iso) => indexParIso.get(iso))
+    .filter((i) => i !== undefined)
+    .sort((a, b) => a - b);
+
+  const pauses = [];
+  let c = 0;
+  while (c < choisis.length) {
+    const i = choisis[c];
+    let j = i;
+    while (c + 1 < choisis.length && choisis[c + 1] === j + 1) { j = choisis[++c]; }
+    c++;
+    if (i < 1 || j > W.length - 2) continue; // hors fenêtre mesurable
+    const jours = [];
+    for (let t = W[i]; t <= W[j]; t++) if (days[t].travaille) jours.push(days[t].iso);
+    pauses.push({
+      debutPose: days[W[i]].iso,
+      finPose: days[W[j]].iso,
+      debutRepos: days[W[i - 1] + 1].iso,
+      finRepos: days[W[j + 1] - 1].iso,
+      jours,
+      cout: cout(i, j),
+      gain: W[j + 1] - W[i - 1] - 1,
+      principal: false,
+    });
+  }
+  return {
+    faisable: true,
+    pauses,
+    totalRepos: pauses.reduce((s, p) => s + p.gain, 0),
+    soldeUtilise: pauses.reduce((s, p) => s + p.cout, 0),
+  };
+}
+
+/**
+ * Lance l'optimisation, avec repli automatique si les contraintes sont trop serrées
+ * (typiquement des jours imposés incompatibles avec « minBloc » ou « maxPauses »).
+ */
+function optimiserAvecRepli(cal, opt) {
+  let r = optimiser(cal, opt);
+  if (r.faisable) return { ...r, assoupli: null };
+
+  const paliers = [
+    { ...opt, minBloc: 1, maxPauses: undefined, libelle: 'contraintes de forme' },
+    { ...opt, minBloc: 1, maxPauses: undefined, congePrincipal: undefined, libelle: 'congé principal' },
+    { ...opt, minBloc: 1, maxPauses: undefined, congePrincipal: undefined, maxParPause: undefined, libelle: 'plafond par pause' },
+  ];
+  for (const p of paliers) {
+    r = optimiser(cal, p);
+    if (r.faisable) return { ...r, assoupli: p.libelle };
+  }
+  return { faisable: false, pauses: [], totalRepos: 0, soldeUtilise: 0, assoupli: null, raison: 'impossible' };
+}
+
+/**
+ * Beaucoup de plans atteignent le même total de repos (tous les vendredis de
+ * l'année se valent). Parmi ces plans optimaux, celui qui répartit les pauses sur
+ * toute la période est le plus agréable à vivre : on cherche donc, par dichotomie,
+ * le plus grand espacement entre pauses qui conserve le score optimal.
+ */
+function optimiserEtEtaler(cal, opt) {
+  const base = optimiserAvecRepli(cal, opt);
+  if (!base.faisable || base.pauses.length < 3) return base;
+
+  const cible = base.totalRepos;
+  const nbJoursTravailles = cal.days.filter((d) => d.travaille).length;
+  let bas = 1;                                              // connu faisable
+  let haut = Math.ceil(nbJoursTravailles / base.pauses.length) + 1; // probablement trop
+  let meilleur = base;
+
+  while (bas < haut) {
+    const milieu = Math.ceil((bas + haut) / 2);
+    const essai = optimiser(cal, { ...opt, espacementMin: milieu });
+    if (essai.faisable && essai.totalRepos === cible) {
+      meilleur = essai; bas = milieu;
+    } else {
+      haut = milieu - 1;
+    }
+  }
+  return { ...meilleur, assoupli: base.assoupli ?? null };
+}
+
+/** Statistiques d'un plan, pour l'affichage. */
+function statistiques(cal, resultat, opt) {
+  const { pauses, totalRepos, soldeUtilise } = resultat;
+  const plusLongue = pauses.reduce((m, p) => Math.max(m, p.gain), 0);
+  // Jours non travaillés sur la période de référence (base + congés posés).
+  const poses = new Set(pauses.flatMap((p) => p.jours));
+  let reposPeriode = 0, travailPeriode = 0;
+  for (const d of cal.days) {
+    if (!d.dansPeriode) continue;
+    if (!d.travaille || poses.has(d.iso)) reposPeriode++; else travailPeriode++;
+  }
+  return {
+    nbPauses: pauses.length,
+    soldeUtilise,
+    reliquat: Math.max(0, Math.floor(opt.solde) - soldeUtilise),
+    totalRepos,
+    rendement: soldeUtilise > 0 ? totalRepos / soldeUtilise : 0,
+    plusLongue,
+    reposPeriode,
+    travailPeriode,
+  };
+}
+
+/** Qualifie une pause pour l'affichage. */
+function typePause(gain) {
+  if (gain >= 16) return { label: 'Grandes vacances', ton: 'or' };
+  if (gain >= 9) return { label: 'Semaine et plus', ton: 'violet' };
+  if (gain >= 5) return { label: 'Longue pause', ton: 'bleu' };
+  return { label: 'Pont', ton: 'vert' };
+}
+
+/* ===== src/ics.js ===== */
+// Export iCalendar (RFC 5545) : un événement « journée entière » par pause.
+
+
+const CRLF = '\r\n';
+
+const compact = (iso) => iso.replace(/-/g, '');
+
+/** « 1 jour ouvré », « 4 jours ouvrables » — accords compris. */
+function uniteJours(n, decompte) {
+  const adj = decompte === 'ouvrables' ? 'ouvrable' : 'ouvré';
+  const s = n > 1 ? 's' : '';
+  return `${n} jour${s} ${adj}${s}`;
+}
+
+const pluriel = (n) => (n > 1 ? 's' : '');
+
+/** Nombre décimal à la française : 2,32 */
+const nombreFr = (x, dec = 2) =>
+  x.toLocaleString('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+function echappe(txt) {
+  return String(txt)
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r?\n/g, '\\n');
+}
+
+/** Pliage des lignes à 75 octets, comme l'exige la RFC. */
+function plier(ligne) {
+  const octets = new TextEncoder().encode(ligne);
+  if (octets.length <= 75) return ligne;
+  const out = [];
+  let courant = '';
+  let taille = 0;
+  for (const ch of ligne) {
+    const n = new TextEncoder().encode(ch).length;
+    const limite = out.length === 0 ? 75 : 74; // les lignes suivies commencent par une espace
+    if (taille + n > limite) { out.push(courant); courant = ''; taille = 0; }
+    courant += ch; taille += n;
+  }
+  out.push(courant);
+  return out.join(`${CRLF} `);
+}
+
+function horodatage() {
+  return new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+}
+
+/**
+ * @param {Array} pauses      pauses issues du moteur
+ * @param {Object} meta       { titre, decompte }
+ * @returns {string} contenu d'un fichier .ics
+ */
+function versIcs(pauses, meta = {}) {
+  const titre = meta.titre || 'Congés';
+  const stamp = horodatage();
+  const lignes = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Pont//Optimiseur de conges//FR',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    `X-WR-CALNAME:${echappe(titre)}`,
+  ];
+
+  pauses.forEach((p, i) => {
+    const detail = [
+      `${p.gain} jours de repos d'affilée, ${formatPlage(p.debutRepos, p.finRepos)}.`,
+      `${uniteJours(p.cout, meta.decompte)} décompté${pluriel(p.cout)}.`,
+      '',
+      `Jours de congé à poser (${p.jours.length}) :`,
+      ...p.jours.map((j) => `  - ${formatLong(j)}`),
+    ].join('\n');
+
+    lignes.push(
+      'BEGIN:VEVENT',
+      `UID:pont-${compact(p.debutRepos)}-${i + 1}@pont.local`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${compact(p.debutRepos)}`,
+      `DTEND;VALUE=DATE:${compact(isoAdd(p.finRepos, 1))}`, // borne de fin exclusive
+      `SUMMARY:${echappe(`${titre} — ${p.gain} j de repos (${p.cout} posé${pluriel(p.cout)})`)}`,
+      `DESCRIPTION:${echappe(detail)}`,
+      'TRANSP:TRANSPARENT',
+      'END:VEVENT',
+    );
+  });
+
+  lignes.push('END:VCALENDAR');
+  return lignes.map(plier).join(CRLF) + CRLF;
+}
+
+/** Récapitulatif en texte brut, prêt à coller dans un mail ou un outil RH. */
+function versTexte(pauses, stats, meta = {}) {
+  const out = [
+    `Plan de congés ${meta.periode || ''}`.trim(),
+    `${stats.totalRepos} jours de repos obtenus avec `
+    + `${uniteJours(stats.soldeUtilise, meta.decompte)} posé${pluriel(stats.soldeUtilise)} `
+    + `(rendement ×${nombreFr(stats.rendement)}).`,
+    stats.reliquat > 0
+      ? `Reliquat non utilisé : ${stats.reliquat} jour${pluriel(stats.reliquat)}.`
+      : null,
+    '',
+  ].filter((l) => l !== null);
+
+  pauses.forEach((p, i) => {
+    out.push(`${i + 1}. ${formatPlage(p.debutRepos, p.finRepos)} — ${p.gain} jours de repos`);
+    out.push(`   ${uniteJours(p.cout, meta.decompte)} à poser : `
+      + `${p.jours.map(formatLong).join(', ')}`);
+  });
+  return out.join('\n');
+}
+
+/* ===== src/app.js ===== */
+// Pont — interface. Aucune dépendance, aucun appel réseau : tout est calculé sur l'appareil.
+
+
+
+
+
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const CLE = 'pont.etat.v2';
+const AUJOURDHUI = utcToIso(Date.now());
+
+// Dans un cadre bac à sable (aperçu d'artefact, intégration), le navigateur refuse
+// les téléchargements lancés par la page. On bascule alors sur le presse-papiers.
+const EN_CADRE = (() => { try { return window.self !== window.top; } catch { return true; } })();
+
+/* ------------------------------------------------------------------- modes */
+
+const MODES = {
+  rendement: {
+    nom: 'Rendement maximum',
+    pitch: 'Le plus de repos par jour posé. Beaucoup de ponts et de week-ends de 3 ou 4 jours.',
+    params: { minBloc: 3, maxPauses: 0, congePrincipal: false },
+  },
+  equilibre: {
+    nom: 'Équilibré',
+    pitch: 'De vraies coupures réparties sur l’année, dont deux semaines l’été.',
+    params: { minBloc: 4, maxPauses: 9, congePrincipal: true },
+  },
+  vacances: {
+    nom: 'Grandes vacances',
+    pitch: 'Uniquement des pauses d’au moins neuf jours de repos d’affilée.',
+    params: { minBloc: 9, maxPauses: 0, congePrincipal: true },
+  },
+  unique: {
+    nom: 'Une seule grande coupure',
+    pitch: 'Tout en une fois, pour la plus longue pause possible.',
+    params: { minBloc: 1, maxPauses: 1, congePrincipal: false },
+  },
+};
+
+/* ------------------------------------------------------------------- état */
+
+function etatParDefaut(annee = 2027) {
+  return {
+    annee,
+    debut: `${annee}-01-01`,
+    fin: `${annee}-12-31`,
+    decompte: 'ouvres',
+    solde: 25,
+    bonus: 0,
+    mode: 'equilibre',
+    semaine: [...SEMAINE_STANDARD],
+    minBloc: 4,
+    maxPauses: 9,
+    etaler: true,
+    congePrincipal: true,
+    cpDebut: `${annee}-05-01`,
+    cpFin: `${annee}-10-31`,
+    plafond: true,
+    imposes: [],
+    interdits: [],
+    vue: 'plan',
+  };
+}
+
+function charger() {
+  try {
+    const brut = localStorage.getItem(CLE);
+    if (!brut) return etatParDefaut();
+    const sauve = JSON.parse(brut);
+    return { ...etatParDefaut(sauve.annee || 2027), ...sauve };
+  } catch { return etatParDefaut(); }
+}
+
+function sauver() {
+  try { localStorage.setItem(CLE, JSON.stringify(etat)); } catch { /* mode privé */ }
+}
+
+let etat = charger();
+let cal = null, resultat = null, stats = null, feries = null;
+
+/* ----------------------------------------------------------------- calcul */
+
+/** Valeurs légales du plafond de congé continu et du congé principal. */
+const legal = (decompte) => decompte === 'ouvrables'
+  ? { plafond: 24, principal: 12 }
+  : { plafond: 20, principal: 10 };
+
+function optionsCourantes() {
+  const l = legal(etat.decompte);
+  return {
+    solde: Math.max(0, (+etat.solde || 0) + (+etat.bonus || 0)),
+    decompte: etat.decompte,
+    minBloc: Math.max(1, +etat.minBloc || 1),
+    maxPauses: +etat.maxPauses > 0 ? +etat.maxPauses : undefined,
+    maxParPause: etat.plafond ? l.plafond : undefined,
+    congePrincipal: etat.congePrincipal
+      ? { min: l.principal, debut: etat.cpDebut, fin: etat.cpFin }
+      : null,
+    imposes: new Set(etat.imposes),
+    interdits: new Set(etat.interdits),
+  };
+}
+
+function recalculer() {
+  feries = feriesMap(isoYear(etat.debut) - 1, isoYear(etat.fin) + 1);
+  cal = buildCalendar({
+    debut: etat.debut, fin: etat.fin, semaine: etat.semaine, feries,
+  });
+  const opt = optionsCourantes();
+  resultat = etat.etaler ? optimiserEtEtaler(cal, opt) : optimiserAvecRepli(cal, opt);
+  stats = statistiques(cal, resultat, opt);
+  rendre();
+}
+
+let minuteur = null;
+function recalculerBientot() {
+  document.body.classList.add('calcul');
+  clearTimeout(minuteur);
+  minuteur = setTimeout(() => {
+    recalculer();
+    document.body.classList.remove('calcul');
+    sauver();
+  }, 90);
+}
+
+/* ------------------------------------------------------------------ rendu */
+
+function rendre() {
+  rendreHero();
+  rendreAlerte();
+  rendrePauses();
+  rendreMillesime();
+  rendreCalendrier();
+  rendreCompteur();
+  $('#chip-periode').textContent = etat.debut.slice(0, 4) === etat.fin.slice(0, 4)
+    ? etat.debut.slice(0, 4)
+    : `${etat.debut.slice(0, 4)}–${etat.fin.slice(2, 4)}`;
+}
+
+function rendreHero() {
+  $('#st-repos').textContent = stats.totalRepos;
+  const u = uniteJours(stats.soldeUtilise, etat.decompte);
+  $('#st-sous').innerHTML = stats.soldeUtilise > 0
+    ? `pour <b>${u}</b> posés — soit <b>×${nombreFr(stats.rendement, 1)}</b> de repos par jour de congé`
+    : 'aucun congé posé : règle ton solde dans les réglages';
+
+  const puces = [
+    `<span class="puce"><b>${stats.nbPauses}</b> pause${stats.nbPauses > 1 ? 's' : ''}</span>`,
+    `<span class="puce">plus longue&nbsp;: <b>${stats.plusLongue}</b> j</span>`,
+    `<span class="puce"><b>${stats.reposPeriode}</b> j non travaillés sur l'année</span>`,
+  ];
+  if (stats.reliquat > 0) {
+    puces.push(`<span class="puce alerte"><b>${stats.reliquat}</b> j non utilisé${stats.reliquat > 1 ? 's' : ''}</span>`);
+  }
+  $('#st-puces').innerHTML = puces.join('');
+}
+
+function rendreAlerte() {
+  const box = $('#alerte-contraintes');
+  if (!resultat.faisable) {
+    box.innerHTML = `<div class="carte" style="border-color:#6b2b2f">
+      <p><b style="color:var(--interdit)">Aucun plan possible.</b> Tes contraintes s'excluent :
+      les jours imposés tombent probablement dans une zone interdite, ou dépassent ton solde.
+      Allège le calendrier ou augmente le solde.</p></div>`;
+    return;
+  }
+  const parts = [];
+  if (resultat.assoupli) {
+    parts.push(`<div class="carte" style="border-color:#6b4a1f">
+      <p><b style="color:var(--ferie)">Contrainte assouplie.</b> Impossible de respecter
+      «&nbsp;${resultat.assoupli}&nbsp;» avec ce solde et ces jours imposés : le plan ci-dessous
+      s'en affranchit.</p></div>`);
+  }
+  if (stats.reliquat > 0 && resultat.faisable) {
+    const pourquoi = etat.mode === 'unique'
+      ? 'le mode «&nbsp;une seule grande coupure&nbsp;» plafonne à une pause'
+      : `aucune pause de ${etat.minBloc}&nbsp;jours ou plus ne rentre dans ce qu'il reste`;
+    parts.push(`<div class="carte note"><p><b>${stats.reliquat}
+      jour${stats.reliquat > 1 ? 's' : ''} non placé${stats.reliquat > 1 ? 's' : ''}</b> :
+      ${pourquoi}. Baisse «&nbsp;pause la plus courte acceptée&nbsp;» ou le nombre maximal de
+      pauses dans les réglages fins.</p></div>`);
+  }
+  box.innerHTML = parts.join('');
+}
+
+function feriesDuBloc(p) {
+  const out = [];
+  for (let d = p.debutRepos; d <= p.finRepos; d = isoAdd(d, 1)) {
+    const nom = feries.get(d);
+    if (nom) out.push({ iso: d, nom });
+  }
+  return out;
+}
+
+function rendrePauses() {
+  const box = $('#liste-pauses');
+  if (!resultat.pauses.length) {
+    box.innerHTML = `<p class="vide-msg">Pas encore de pause.<br>
+      Renseigne ton solde de congés dans les réglages.</p>`;
+    return;
+  }
+  box.innerHTML = resultat.pauses.map((p, i) => {
+    const t = typePause(p.gain);
+    const f = feriesDuBloc(p);
+    return `<details class="carte pause">
+      <summary>
+        <div class="pause-nb"><strong>${p.gain}</strong><span>jours</span></div>
+        <div class="pause-txt">
+          <div class="pause-quand">${formatPlage(p.debutRepos, p.finRepos)}<span class="etiq ${t.ton}">${t.label}</span></div>
+          <div class="pause-cout">${uniteJours(p.cout, etat.decompte)} à poser · rendement ×${nombreFr(p.gain / p.cout, 1)}</div>
+        </div>
+        <svg class="pause-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="pause-detail">
+        <dl>
+          <dt>Repos</dt><dd>du ${formatLong(p.debutRepos)} au ${formatLong(p.finRepos)}</dd>
+          <dt>Décompté</dt><dd>${uniteJours(p.cout, etat.decompte)}</dd>
+          ${f.length ? `<dt>Fériés captés</dt><dd>${f.map((x) => `<span class="ferie-nom">${x.nom}</span> (${numeroJour(isoDay(x.iso))} ${moisNom(isoMonth(x.iso))})`).join('<br>')}</dd>` : ''}
+        </dl>
+        <div style="margin-top:12px;color:var(--txt-3);font-size:12.5px">Jours de congé à poser</div>
+        <ul>${p.jours.map((j) => `<li>${formatLong(j)}</li>`).join('')}</ul>
+      </div>
+    </details>`;
+  }).join('');
+}
+
+function rendreMillesime() {
+  const liste = [];
+  for (let y = isoYear(etat.debut); y <= isoYear(etat.fin); y++) {
+    for (const f of feriesFrance(y)) {
+      if (f.iso >= etat.debut && f.iso <= etat.fin) liste.push(f);
+    }
+  }
+  const perdus = liste.filter((f) => !etat.semaine[isoDow(f.iso)]);
+  const reposGratuit = cal.days.filter((d) => d.dansPeriode && !d.travaille).length;
+  const annee = etat.debut.slice(0, 4);
+
+  // Ce que chaque férié permet, selon le jour de la semaine où il tombe.
+  const avis = (iso) => {
+    const d = isoDow(iso);
+    if (!etat.semaine[d]) return { txt: 'perdu', ton: 'var(--txt-3)' };
+    const veille = etat.semaine[(d + 6) % 7];
+    const lendemain = etat.semaine[(d + 1) % 7];
+    if (!veille || !lendemain) return { txt: '3 j offerts', ton: 'var(--impose)' };
+    const versAvant = !etat.semaine[(d + 5) % 7];   // un seul jour à poser avant
+    const versApres = !etat.semaine[(d + 2) % 7];   // un seul jour à poser après
+    if (versAvant || versApres) return { txt: '1 j → 4 j', ton: 'var(--repos)' };
+    return { txt: '2 j → 5 j', ton: 'var(--ferie)' };
+  };
+
+  $('#millesime').innerHTML = `
+    <p><b>${liste.length} jours fériés</b> en ${annee}, dont
+      <b style="color:${perdus.length ? 'var(--interdit)' : 'var(--repos)'}">${perdus.length}</b>
+      ${perdus.length > 1 ? 'tombent' : 'tombe'} un jour que tu ne travailles pas
+      ${perdus.length ? '— autant de repos perdu.' : '.'}</p>
+    <p>Sans poser le moindre congé, tu as déjà <b>${reposGratuit} jours</b> de repos
+      (week-ends et fériés).</p>
+    <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px">
+      <caption style="caption-side:top;text-align:left;color:var(--txt-3);font-size:11.5px;padding-bottom:6px">
+        Ce que chaque férié permet d'obtenir
+      </caption>
+      ${liste.map((f) => {
+        const a = avis(f.iso);
+        return `<tr style="border-top:1px solid var(--line)">
+          <td style="padding:5px 0;color:var(--txt-2);white-space:nowrap">${jourNom(isoDow(f.iso)).slice(0, 3)}. ${numeroJour(isoDay(f.iso))} ${moisCourt(isoMonth(f.iso))}</td>
+          <td style="padding:5px 8px;color:var(--txt)">${f.nom}</td>
+          <td style="padding:5px 0;text-align:right;color:${a.ton};white-space:nowrap;font-weight:600">${a.txt}</td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+}
+
+function etatsDesJours() {
+  const poses = new Set(resultat.pauses.flatMap((p) => p.jours));
+  const blocs = new Set();
+  for (const p of resultat.pauses) {
+    for (let d = p.debutRepos; d <= p.finRepos; d = isoAdd(d, 1)) blocs.add(d);
+  }
+  const imposes = new Set(etat.imposes);
+  const interdits = new Set(etat.interdits);
+  return { poses, blocs, imposes, interdits };
+}
+
+function rendreCalendrier() {
+  const { poses, blocs, imposes, interdits } = etatsDesJours();
+  const parIso = new Map(cal.days.map((d) => [d.iso, d]));
+
+  // Mois couverts par la période de référence.
+  const mois = [];
+  let curseur = `${etat.debut.slice(0, 7)}-01`;
+  const dernier = `${etat.fin.slice(0, 7)}-01`;
+  let garde = 0;
+  while (curseur <= dernier && garde++ < 400) {
+    mois.push(curseur);
+    const y = isoYear(curseur), m = isoMonth(curseur);
+    curseur = m === 12 ? `${y + 1}-01-01` : `${y}-${String(m + 1).padStart(2, '0')}-01`;
+  }
+
+  const entetes = [1, 2, 3, 4, 5, 6, 0]
+    .map((d) => `<div class="jour-nom" aria-hidden="true">${jourLettre(d)}</div>`).join('');
+
+  $('#calendrier').innerHTML = mois.map((premier) => {
+    const y = isoYear(premier), m = isoMonth(premier);
+    const nbJours = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    const decalage = (isoDow(premier) + 6) % 7; // grille qui commence le lundi
+
+    let posesMois = 0;
+    const cases = [];
+    for (let k = 0; k < decalage; k++) cases.push('<div class="jour vide"></div>');
+    for (let jour = 1; jour <= nbJours; jour++) {
+      const iso = `${y}-${String(m).padStart(2, '0')}-${String(jour).padStart(2, '0')}`;
+      const d = parIso.get(iso);
+      const cls = ['jour'];
+      const titres = [];
+      if (!d || !d.dansPeriode) cls.push('hors');
+      if (d) {
+        if (d.weekend) cls.push('we');
+        if (d.ferie) { cls.push('ferie'); titres.push(d.ferie); }
+        if (blocs.has(iso)) cls.push('bloc');
+        if (poses.has(iso)) { cls.push('pose'); posesMois++; titres.push('congé posé'); }
+        if (imposes.has(iso)) { cls.push('impose'); titres.push('imposé'); }
+        if (interdits.has(iso)) { cls.push('interdit'); titres.push('interdit'); }
+        if (d.travaille && d.dansPeriode) cls.push('cliquable');
+      }
+      if (iso === AUJOURDHUI) cls.push('aujourdhui');
+      const t = titres.length ? ` title="${titres.join(' · ')}"` : '';
+      const label = `${formatLong(iso)}${titres.length ? ' — ' + titres.join(', ') : ''}`;
+      cases.push(`<button type="button" class="${cls.join(' ')}" data-iso="${iso}"${t}
+        aria-label="${label}">${jour}</button>`);
+    }
+
+    return `<div class="mois">
+      <div class="mois-nom">${moisNom(m)} ${y}${posesMois ? `<small>${posesMois} posé${posesMois > 1 ? 's' : ''}</small>` : ''}</div>
+      <div class="grille">${entetes}${cases.join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function rendreCompteur() {
+  const n = etat.imposes.length + etat.interdits.length;
+  $('#compteur-contraintes').innerHTML = n === 0 ? '' : `
+    <div class="carte note" style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <p style="flex:1">
+        ${etat.imposes.length ? `<b style="color:var(--impose)">${etat.imposes.length}</b> imposé${etat.imposes.length > 1 ? 's' : ''}` : ''}
+        ${etat.imposes.length && etat.interdits.length ? ' · ' : ''}
+        ${etat.interdits.length ? `<b style="color:var(--interdit)">${etat.interdits.length}</b> interdit${etat.interdits.length > 1 ? 's' : ''}` : ''}
+      </p>
+      <button class="btn discret" id="btn-vider" style="padding:7px 12px">Effacer</button>
+    </div>`;
+  const b = $('#btn-vider');
+  if (b) b.addEventListener('click', () => {
+    etat.imposes = []; etat.interdits = [];
+    recalculerBientot();
+    toast('Contraintes effacées');
+  });
+}
+
+/* ------------------------------------------------------- synchro réglages */
+
+function syncReglages() {
+  $$('[data-decompte]').forEach((b) => {
+    b.setAttribute('aria-pressed', String(b.dataset.decompte === etat.decompte));
+  });
+  const l = legal(etat.decompte);
+  $('#aide-decompte').innerHTML = etat.decompte === 'ouvrables'
+    ? `Le samedi compte, même si tu ne travailles pas : <b>poser un vendredi coûte 2 jours</b>
+       (vendredi + samedi), un lundi n'en coûte qu'un. Solde légal plein : 30 jours.`
+    : `Seuls les jours réellement travaillés sont décomptés. Solde légal plein : 25 jours.`;
+  $('#aide-principal').textContent =
+    `Au moins ${l.principal} jours d'affilée dans la fenêtre choisie`;
+  $('#aide-plafond').textContent = `Pas plus de ${l.plafond} jours de congé d'un seul tenant`;
+
+  $('#in-solde').value = etat.solde;
+  $('#in-bonus').value = etat.bonus;
+  $('#in-annee').value = etat.annee;
+  $('#in-debut').value = etat.debut;
+  $('#in-fin').value = etat.fin;
+  $('#in-minbloc').value = etat.minBloc;
+  $('#v-minbloc').textContent = etat.minBloc;
+  $('#in-maxpauses').value = etat.maxPauses;
+  $('#in-etaler').checked = etat.etaler;
+  $('#in-principal').checked = etat.congePrincipal;
+  $('#in-cp-debut').value = etat.cpDebut;
+  $('#in-cp-fin').value = etat.cpFin;
+  $('#in-plafond').checked = etat.plafond;
+
+  $$('#modes .mode').forEach((b) => {
+    b.setAttribute('aria-pressed', String(b.dataset.mode === etat.mode));
+  });
+  $$('#semaine button').forEach((b) => {
+    b.setAttribute('aria-pressed', String(!!etat.semaine[+b.dataset.dow]));
+  });
+}
+
+/** Le mode courant correspond-il encore aux réglages fins ? Sinon : « personnalisé ». */
+function verifierMode() {
+  const p = MODES[etat.mode]?.params;
+  if (!p) return;
+  const colle = +etat.minBloc === p.minBloc
+    && +etat.maxPauses === p.maxPauses
+    && etat.congePrincipal === p.congePrincipal;
+  if (!colle) etat.mode = '';
+}
+
+/* ------------------------------------------------------------- événements */
+
+/** Remplace confirm(), refusé dans les cadres bac à sable. */
+function demander() {
+  return new Promise((resoudre) => {
+    const voile = $('#voile');
+    voile.hidden = false;
+    const fin = (reponse) => {
+      voile.hidden = true;
+      $('#dlg-oui').onclick = null;
+      $('#dlg-non').onclick = null;
+      voile.onclick = null;
+      resoudre(reponse);
+    };
+    $('#dlg-oui').onclick = () => fin(true);
+    $('#dlg-non').onclick = () => fin(false);
+    voile.onclick = (e) => { if (e.target === voile) fin(false); };
+    $('#dlg-oui').focus();
+  });
+}
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('vu');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('vu'), 2200);
+}
+
+function changerVue(nom) {
+  etat.vue = nom;
+  $$('.vue').forEach((v) => v.classList.toggle('actif', v.id === `vue-${nom}`));
+  $$('.onglets button').forEach((b) => {
+    if (b.dataset.vue === nom) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  sauver();
+}
+
+function appliquerAnnee(y) {
+  y = Math.min(2100, Math.max(2000, Math.round(y) || 2027));
+  etat.annee = y;
+  etat.debut = `${y}-01-01`;
+  etat.fin = `${y}-12-31`;
+  etat.cpDebut = `${y}-05-01`;
+  etat.cpFin = `${y}-10-31`;
+  etat.imposes = []; etat.interdits = [];
+}
+
+function brancher() {
+  // Onglets
+  $$('.onglets button').forEach((b) => {
+    b.addEventListener('click', () => changerVue(b.dataset.vue));
+  });
+
+  // Modes
+  $('#modes').innerHTML = Object.entries(MODES).map(([cle, m]) => `
+    <button class="mode" data-mode="${cle}" aria-pressed="false">
+      <strong>${m.nom}</strong><span>${m.pitch}</span>
+    </button>`).join('');
+  $$('#modes .mode').forEach((b) => b.addEventListener('click', () => {
+    etat.mode = b.dataset.mode;
+    Object.assign(etat, MODES[b.dataset.mode].params);
+    syncReglages(); recalculerBientot();
+  }));
+
+  // Jours de la semaine (lundi d'abord)
+  $('#semaine').innerHTML = [1, 2, 3, 4, 5, 6, 0].map((d) => `
+    <button type="button" data-dow="${d}" aria-pressed="false"
+      aria-label="${jourNom(d)}">${jourLettre(d)}</button>`).join('');
+  $$('#semaine button').forEach((b) => b.addEventListener('click', () => {
+    const d = +b.dataset.dow;
+    const copie = [...etat.semaine];
+    copie[d] = !copie[d];
+    if (copie.some(Boolean)) etat.semaine = copie; else toast('Il faut au moins un jour travaillé');
+    syncReglages(); recalculerBientot();
+  }));
+
+  // Décompte
+  $$('[data-decompte]').forEach((b) => b.addEventListener('click', () => {
+    if (etat.decompte === b.dataset.decompte) return;
+    const avant = etat.decompte;
+    etat.decompte = b.dataset.decompte;
+    // Un solde encore « par défaut » suit la convention : 25 ouvrés ↔ 30 ouvrables.
+    if (avant === 'ouvres' && +etat.solde === 25) etat.solde = 30;
+    else if (avant === 'ouvrables' && +etat.solde === 30) etat.solde = 25;
+    syncReglages(); recalculerBientot();
+  }));
+
+  // Steppers
+  const stepper = (sel, champ, min, max, apres) => {
+    $$(sel).forEach((b) => b.addEventListener('click', () => {
+      const pas = +(b.dataset.pas ?? b.dataset.pasBonus ?? b.dataset.pasAnnee);
+      const v = Math.min(max, Math.max(min, (+etat[champ] || 0) + pas));
+      if (apres) apres(v); else etat[champ] = v;
+      syncReglages(); recalculerBientot();
+    }));
+  };
+  stepper('[data-pas]', 'solde', 0, 80);
+  stepper('[data-pas-bonus]', 'bonus', 0, 40);
+  stepper('[data-pas-annee]', 'annee', 2000, 2100, appliquerAnnee);
+
+  const nombre = (sel, champ, min, max, apres) => {
+    $(sel).addEventListener('input', () => {
+      const v = Math.min(max, Math.max(min, Math.round(+$(sel).value) || 0));
+      if (apres) apres(v); else etat[champ] = v;
+      if (champ === 'minBloc' || champ === 'maxPauses') verifierMode();
+      syncReglages(); recalculerBientot();
+    });
+  };
+  nombre('#in-solde', 'solde', 0, 80);
+  nombre('#in-bonus', 'bonus', 0, 40);
+  nombre('#in-maxpauses', 'maxPauses', 0, 40);
+  $('#in-annee').addEventListener('change', () => {
+    appliquerAnnee(+$('#in-annee').value);
+    syncReglages(); recalculerBientot();
+  });
+
+  $('#in-minbloc').addEventListener('input', () => {
+    etat.minBloc = +$('#in-minbloc').value;
+    $('#v-minbloc').textContent = etat.minBloc;
+    verifierMode();
+    $$('#modes .mode').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === etat.mode)));
+    recalculerBientot();
+  });
+
+  // Dates
+  const dateChamp = (sel, champ) => $(sel).addEventListener('change', () => {
+    const v = $(sel).value;
+    if (!v) return;
+    etat[champ] = v;
+    if (etat.debut > etat.fin) { const t = etat.debut; etat.debut = etat.fin; etat.fin = t; }
+    syncReglages(); recalculerBientot();
+  });
+  dateChamp('#in-debut', 'debut');
+  dateChamp('#in-fin', 'fin');
+  dateChamp('#in-cp-debut', 'cpDebut');
+  dateChamp('#in-cp-fin', 'cpFin');
+
+  // Bascules
+  const bascule = (sel, champ) => $(sel).addEventListener('change', () => {
+    etat[champ] = $(sel).checked;
+    if (champ === 'congePrincipal') verifierMode();
+    syncReglages(); recalculerBientot();
+  });
+  bascule('#in-etaler', 'etaler');
+  bascule('#in-principal', 'congePrincipal');
+  bascule('#in-plafond', 'plafond');
+
+  // Calendrier : appui sur un jour → imposé → interdit → normal
+  $('#calendrier').addEventListener('click', (e) => {
+    const b = e.target.closest('.jour.cliquable');
+    if (!b) return;
+    const iso = b.dataset.iso;
+    const iImp = etat.imposes.indexOf(iso);
+    const iInt = etat.interdits.indexOf(iso);
+    if (iImp === -1 && iInt === -1) {
+      etat.imposes.push(iso);
+      toast(`${formatLong(iso)} : congé imposé`);
+    } else if (iImp !== -1) {
+      etat.imposes.splice(iImp, 1);
+      etat.interdits.push(iso);
+      toast(`${formatLong(iso)} : interdit`);
+    } else {
+      etat.interdits.splice(iInt, 1);
+      toast(`${formatLong(iso)} : libre`);
+    }
+    recalculerBientot();
+  });
+
+  // Export .ics — téléchargement si la page le permet, presse-papiers sinon.
+  // Un aperçu en cadre refuse les téléchargements : on met alors en avant la
+  // copie du récapitulatif, seule action vraiment utile depuis un téléphone.
+  if (EN_CADRE) {
+    $('#btn-ics').lastChild.textContent = ' Copier le calendrier (.ics) ';
+    $('#btn-ics').classList.remove('primaire');
+    $('#btn-copie').classList.add('primaire');
+    $('#btn-copie').parentNode.prepend($('#btn-copie'));
+    $('#aide-export').innerHTML = 'Cet aperçu ne peut pas télécharger de fichier. '
+      + 'Le récapitulatif se colle dans un message ou une demande de congés ; '
+      + 'le .ics se copie aussi, à enregistrer sur ordinateur sous <code>conges.ics</code> '
+      + 'puis à ouvrir avec ton agenda.';
+  }
+
+  $('#btn-ics').addEventListener('click', async () => {
+    if (!resultat.pauses.length) return toast('Aucune pause à exporter');
+    const annee = etat.debut.slice(0, 4);
+    const texte = versIcs(resultat.pauses, { titre: `Congés ${annee}`, decompte: etat.decompte });
+
+    if (EN_CADRE) {
+      try {
+        await navigator.clipboard.writeText(texte);
+        toast('Calendrier copié — colle-le dans un fichier .ics');
+      } catch {
+        toast('Copie refusée par le navigateur');
+      }
+      return;
+    }
+    const blob = new Blob([texte], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `conges-${annee}.ics`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast(`${resultat.pauses.length} pauses exportées`);
+  });
+
+  // Copie du récapitulatif
+  $('#btn-copie').addEventListener('click', async () => {
+    const txt = versTexte(resultat.pauses, stats, {
+      decompte: etat.decompte,
+      periode: etat.debut.slice(0, 4) === etat.fin.slice(0, 4)
+        ? etat.debut.slice(0, 4) : `${etat.debut} → ${etat.fin}`,
+    });
+    try {
+      await navigator.clipboard.writeText(txt);
+      toast('Récapitulatif copié');
+    } catch {
+      // Repli : sélection manuelle dans une zone de texte temporaire.
+      const ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.style.cssText = 'position:fixed;top:50%;left:4%;width:92%;height:40vh;z-index:99';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand && document.execCommand('copy');
+      ta.remove();
+      toast(ok ? 'Récapitulatif copié' : 'Copie refusée par le navigateur');
+    }
+  });
+
+  // Réinitialisation
+  $('#btn-reset').addEventListener('click', async () => {
+    if (!await demander()) return;
+    etat = etatParDefaut(2027);
+    syncReglages(); recalculer(); sauver(); changerVue('plan');
+    toast('Réglages réinitialisés');
+  });
+}
+
+/* ------------------------------------------------------------- démarrage */
+
+brancher();
+syncReglages();
+recalculer();
+changerVue(etat.vue || 'plan');
+</script>
+</body>
+</html>
